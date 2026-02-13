@@ -20,7 +20,7 @@ const Navbar = () => {
       <div className="container mx-auto flex items-center justify-between py-4 px-4">
         <Link to="/" className="flex items-center gap-2">
           <img src={logo} alt="logo" className="h-8 w-8 text-primary" style={{borderRadius : 50,}} />
-          <span className="font-display text-2xl font-bold text-secondary-foreground">TASK</span>
+          <span className="font-display text-2xl font-bold text-secondary-foreground">ADVENTURE SPORTS, TUMAKURU</span>
         </Link>
 
         <div className="hidden md:flex items-center gap-8">
