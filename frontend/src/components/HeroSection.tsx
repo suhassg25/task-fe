@@ -2,14 +2,14 @@ import { motion } from "framer-motion";
 import { ArrowRight, MapPin, Star } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import heroImg from "../assets/taskLogo.png";
+import heroImg from "../assets/hero.png";
 
 const HeroSection = () => {
   return (
     <section className="relative min-h-screen flex items-center overflow-hidden">
       <div className="absolute inset-0">
         <img src={heroImg} alt="Luxury glamping in nature" className="w-full h-full object-cover" />
-        <div className="absolute inset-0 bg-gradient-to-r from-secondary/90 via-secondary/60 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-r from-secondary/50 via-secondary/30 to-transparent" />
       </div>
 
       <div className="relative container mx-auto px-4 pt-24">
@@ -20,7 +20,7 @@ const HeroSection = () => {
             transition={{ duration: 0.6 }}
             className="flex items-center gap-2 mb-6"
           >
-            <span className="inline-flex items-center gap-1 bg-primary/20 text-primary px-4 py-1.5 rounded-full text-sm font-semibold">
+            <span className="inline-flex items-center gap-1 bg-primary/100 px-4 py-1.5 rounded-full text-sm font-semibold">
               <Star className="h-4 w-4" fill="currentColor" /> Top Rated Experience
             </span>
           </motion.div>
@@ -32,7 +32,7 @@ const HeroSection = () => {
             className="font-display text-5xl md:text-7xl font-bold text-secondary-foreground leading-tight mb-6"
           >
             Discover nature's beauty with{" "}
-            <span className="text-primary">luxury camping</span>
+            <span className="text-primary-foreground">luxury camping</span>
           </motion.h1>
 
           <motion.p
