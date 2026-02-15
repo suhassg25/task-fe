@@ -3,15 +3,19 @@ import { Link, useLocation } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import  logo from "../assets/taskLogo.png"
+import { useLanguage } from "../LanguageContext";
 
-const navLinks = [
-  { label: "Home", path: "/" },
-  { label: "Destinations", path: "/#destinations" },
-  { label: "About", path: "/#about" },
-  { label: "Contact", path: "/#contact" },
-];
 
 const Navbar = () => {
+  const { t, toggleLang, lang } = useLanguage();
+
+  const navLinks = [
+    { label: t("home"), path: "/" },
+    { label: t("destinations"), path: "/#destinations" },
+    { label: t("about"), path: "/#about" },
+    { label: t("contact"), path: "/#contact" },
+  ];
+
   const [open, setOpen] = useState(false);
   const location = useLocation();
 
@@ -20,7 +24,7 @@ const Navbar = () => {
       <div className="container mx-auto flex items-center justify-between py-4 px-4">
         <Link to="/" className="flex items-center gap-2">
           <img src={logo} alt="logo" className="h-8 w-8 text-primary" style={{borderRadius : 50,}} />
-          <span className="font-display text-2xl font-bold text-secondary-foreground">ADVENTURE SPORTS, TUMAKURU</span>
+          <span className="font-display text-2xl font-bold text-secondary-foreground">{t("title")}</span>
         </Link>
 
         <div className="hidden md:flex items-center gap-8">
@@ -38,14 +42,17 @@ const Navbar = () => {
         <div className="hidden md:flex items-center gap-3">
           <Link to="/admin">
             <Button variant="ghost" className="text-secondary-foreground/80 hover:text-primary">
-              Admin
+              {t("admin")}
             </Button>
           </Link>
           <Link to="/booking">
             <Button className="bg-primary text-primary-foreground hover:bg-olive-light font-semibold px-6">
-              Book Now
+              {t("bookNow")}
             </Button>
           </Link>
+          <Button variant="outline" onClick={toggleLang}>
+            {lang === "en" ? "ಕನ್ನಡ" : "English"}
+          </Button>
         </div>
 
         <button className="md:hidden text-secondary-foreground" onClick={() => setOpen(!open)}>
@@ -66,8 +73,11 @@ const Navbar = () => {
             </a>
           ))}
           <Link to="/booking" onClick={() => setOpen(false)}>
-            <Button className="w-full mt-2 bg-primary text-primary-foreground">Book Now</Button>
+            <Button className="w-full mt-2 bg-primary text-primary-foreground">{t("bookNow")}</Button>
           </Link>
+          <Button variant="outline" className="w-full mt-2" onClick={toggleLang}>
+            {lang === "en" ? "ಕನ್ನಡ" : "English"}
+          </Button>
         </div>
       )}
     </nav>

@@ -7,6 +7,7 @@ import Index from "./pages/Index";
 import Booking from "./pages/Booking";
 import Admin from "./pages/Admin";
 import NotFound from "./pages/NotFound";
+import { LanguageProvider } from "./LanguageContext";
 
 const queryClient = new QueryClient();
 
@@ -15,6 +16,7 @@ const App = () => (
     <TooltipProvider>
       <Toaster />
       <Sonner />
+      <LanguageProvider>
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Index />} />
@@ -23,6 +25,7 @@ const App = () => (
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
+      </LanguageProvider>
     </TooltipProvider>
   </QueryClientProvider>
 );
