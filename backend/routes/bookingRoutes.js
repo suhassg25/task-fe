@@ -86,10 +86,11 @@ router.post('/create-order', async (req, res) => {
   "Cinema": 2000,
 };
   try {
-    const { name, email, phone, destination, checkin, checkout, guests, noOfDays } = req.body;
+    const { name, email, phone, destination, checkin, checkout, guests } = req.body;
 
     //const service = await Service.findById(serviceId);
     //if (!service) return res.status(404).json({ error: 'Service not found' });
+let noOfDays = Math.ceil((new Date(checkout).getTime() - new Date(checkin).getTime()) / (1000 * 3600 * 24));
 let totalAmount = destinationsValues[destination] * guests * noOfDays;
     // Create Razorpay order
    /* const options = {
