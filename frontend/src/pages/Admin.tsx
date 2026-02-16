@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Users, Calendar, IndianRupee, TrendingUp, ArrowLeft, Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -13,17 +13,6 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
-
-// Mock bookings data — will come from DB once backend is set up
-const mockBookings = [
-  { id: 1, name: "Priya Sharma", email: "priya@email.com", destination: "Lakeside Retreat", checkIn: "2026-03-15", checkOut: "2026-03-18", guests: 2, amount: "₹13,500", status: "confirmed" },
-  { id: 2, name: "Rahul Verma", email: "rahul@email.com", destination: "Desert Glamping", checkIn: "2026-03-20", checkOut: "2026-03-22", guests: 4, amount: "₹10,400", status: "pending" },
-  { id: 3, name: "Ananya Patel", email: "ananya@email.com", destination: "Forest Canopy Camp", checkIn: "2026-04-01", checkOut: "2026-04-04", guests: 3, amount: "₹11,400", status: "confirmed" },
-  { id: 4, name: "Vikram Singh", email: "vikram@email.com", destination: "Mountain Stargazing", checkIn: "2026-04-10", checkOut: "2026-04-13", guests: 2, amount: "₹18,000", status: "confirmed" },
-  { id: 5, name: "Meera Joshi", email: "meera@email.com", destination: "Lakeside Retreat", checkIn: "2026-04-15", checkOut: "2026-04-17", guests: 1, amount: "₹9,000", status: "cancelled" },
-  { id: 6, name: "Arjun Nair", email: "arjun@email.com", destination: "Desert Glamping", checkIn: "2026-04-20", checkOut: "2026-04-23", guests: 5, amount: "₹15,600", status: "pending" },
-];
-
 const stats = [
   { icon: Users, label: "Total Bookings", value: "156", change: "+12%" },
   { icon: Calendar, label: "This Month", value: "24", change: "+8%" },
@@ -38,6 +27,15 @@ const statusColor: Record<string, string> = {
 };
 
 const Admin = () => {
+  const [mockBookings , setMockBookings] = useState([])
+  useEffect(() => {
+    async function fetchBookings() {
+      const response = await fetch("https://task-fe-75yw.onrender.com/api/admin/bookings?key=suhas_is_admin");
+      const data = await response.json();
+      setMockBookings(data);
+    }
+    fetchBookings();
+  },[])
   const [search, setSearch] = useState("");
   const filtered = mockBookings.filter(
     (b) =>
