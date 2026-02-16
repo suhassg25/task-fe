@@ -115,7 +115,7 @@ let totalAmount = destinationsValues[destination] * guests * noOfDays;
 
     await booking.save();
 
-    res.json({ orderId: order.id, amount: order.amount, currency: order.currency, bookingId: booking._id });
+    res.json({ amount: totalAmount, });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
