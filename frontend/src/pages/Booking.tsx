@@ -23,7 +23,6 @@ const destinations = [
   { value: "Water Sports", label: "Water Sports — ₹1,000", },
   { value: "Cinema", label: "Cinema — ₹2,000", },
 ];
-
 const Booking = () => {
   const { t, lang, toggleLang } = useLanguage();
   const [formData, setFormData] = useState({
@@ -31,13 +30,14 @@ const Booking = () => {
     email: "",
     phone: "",
     destination: "",
-    checkIn: "",
-    checkOut: "",
+    checkin: "",
+    checkout: "",
     guests: "",
     noOfDays: 0,
+    amount: 0,
   });
 const value =async () => {
-      const val = fetch("localhost:5000/api/bookings", {
+      const val = fetch("https://task-fe-75yw.onrender.com/api/create-order", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -54,8 +54,8 @@ const value =async () => {
     };
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const diff = Math.floor((new Date(formData.checkOut).getTime() - new Date(formData.checkIn).getTime()) / (1000 * 3600 * 24));
-    setFormData({ ...formData, noOfDays: diff > 0 ? diff : 1 });
+    const diff = Math.floor((new Date(formData.checkout).getTime() - new Date(formData.checkin).getTime()) / (1000 * 3600 * 24));
+    setFormData({ ...formData, noOfDays: diff});
     value();
   };
 
@@ -140,8 +140,8 @@ const value =async () => {
                     required
                     type="date"
                     className="bg-background"
-                    value={formData.checkIn}
-                    onChange={(e) => setFormData({ ...formData, checkIn: e.target.value })}
+                    value={formData.checkin}
+                    onChange={(e) => setFormData({ ...formData, checkin: e.target.value })}
                   />
                 </div>
                 <div>
@@ -152,9 +152,9 @@ const value =async () => {
                     required
                     type="date"
                     className="bg-background"
-                    value={formData.checkOut}
+                    value={formData.checkout}
                     onChange={(e) => {
-                      setFormData({ ...formData, checkOut: e.target.value });
+                      setFormData({ ...formData, checkout: e.target.value });
                     }}
                   />
                 </div>
