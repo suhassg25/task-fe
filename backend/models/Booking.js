@@ -9,6 +9,7 @@ const bookingSchema = new mongoose.Schema({
   checkin: [{ type: Date, required: true }],
   checkout: [{ type: Date, required: true }],
   totalAmount: { type: Number, required: true },
+  status: { type: String, enum: ['pending', 'paid'], default: 'pending' },
 });
 
 export default mongoose.model('Booking', bookingSchema);
