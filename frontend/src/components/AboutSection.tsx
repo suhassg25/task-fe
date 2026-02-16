@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { Shield, Leaf, Heart } from "lucide-react";
-import adventureImg from "@/assets/adventure.jpg";
+import adventureImg from "@/assets/adventure-.jpg";
+import { useLanguage } from "../LanguageContext";
 
 const features = [
   { icon: Shield, title: "Safe & Secure", desc: "24/7 security and safety measures at every location" },
@@ -9,6 +10,7 @@ const features = [
 ];
 
 const AboutSection = () => {
+    const { t, toggleLang, lang } = useLanguage();
   return (
     <section id="about" className="py-24 bg-background">
       <div className="container mx-auto px-4">
@@ -30,14 +32,13 @@ const AboutSection = () => {
             viewport={{ once: true }}
           >
             <span className="text-primary font-semibold uppercase tracking-widest text-sm font-body">
-              Why Choose Us
+              {t("whyus")}
             </span>
             <h2 className="font-display text-4xl md:text-5xl font-bold text-foreground mt-3 mb-6">
-              Creating unforgettable outdoor experiences
+              {t("unforgettable")}
             </h2>
             <p className="text-muted-foreground font-body text-lg mb-10">
-              We believe camping should be an adventure, not a compromise. Our luxury glamping
-              experiences combine the thrill of the outdoors with the comfort you deserve.
+              {t("believe")}
             </p>
 
             <div className="space-y-6">

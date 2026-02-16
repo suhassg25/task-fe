@@ -1,8 +1,10 @@
 import { Mountain } from "lucide-react";
 import { Link } from "react-router-dom";
 import logo from "../assets/taskLogo.png"
+import { useLanguage } from "@/LanguageContext";
 
 const Footer = () => {
+  const { t, lang, toggleLang } = useLanguage();
   return (
     <footer className="bg-secondary py-16">
       <div className="container mx-auto px-4">
@@ -13,17 +15,17 @@ const Footer = () => {
               <span className="font-display text-xl font-bold text-secondary-foreground">TASK</span>
             </div>
             <p className="text-secondary-foreground/60 font-body max-w-sm">
-              Experience the magic of luxury camping. We bring comfort to the wilderness so you can focus on making memories.
+              {t("expirence")}
             </p>
           </div>
 
           <div>
-            <h4 className="font-display text-lg font-semibold text-secondary-foreground mb-4">Quick Links</h4>
+            <h4 className="font-display text-lg font-semibold text-secondary-foreground mb-4">{t("quickLinks")}</h4>
             <div className="space-y-2 font-body">
-              <a href="/#destinations" className="block text-secondary-foreground/60 hover:text-primary transition-colors">Destinations</a>
-              <a href="/#about" className="block text-secondary-foreground/60 hover:text-primary transition-colors">About Us</a>
-              <Link to="/booking" className="block text-secondary-foreground/60 hover:text-primary transition-colors">Book Now</Link>
-              <a href="/#contact" className="block text-secondary-foreground/60 hover:text-primary transition-colors">Contact</a>
+              <a href="/#destinations" className="block text-secondary-foreground/60 hover:text-primary transition-colors">{t("destinations")}</a>
+              <a href="/#about" className="block text-secondary-foreground/60 hover:text-primary transition-colors">{t("about")}</a>
+              <Link to="/booking" className="block text-secondary-foreground/60 hover:text-primary transition-colors">{t("bookNow")}</Link>
+              <a href="/#contact" className="block text-secondary-foreground/60 hover:text-primary transition-colors">{t("contact")}</a>
             </div>
           </div>
 

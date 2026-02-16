@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { Star, Quote } from "lucide-react";
+import { useLanguage } from "@/LanguageContext";
 
 const testimonials = [
   {
@@ -23,6 +24,7 @@ const testimonials = [
 ];
 
 const TestimonialsSection = () => {
+  const { t, toggleLang, lang } = useLanguage();
   return (
     <section className="py-24 bg-card">
       <div className="container mx-auto px-4">
@@ -33,10 +35,10 @@ const TestimonialsSection = () => {
           className="text-center mb-16"
         >
           <span className="text-primary font-semibold uppercase tracking-widest text-sm font-body">
-            Testimonials
+            {t("testimonials")}
           </span>
           <h2 className="font-display text-4xl md:text-5xl font-bold text-foreground mt-3">
-            What our campers say
+            {t("whatCampersSay")}
           </h2>
         </motion.div>
 

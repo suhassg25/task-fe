@@ -3,8 +3,10 @@ import { Mail, Phone, MapPin } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { useLanguage } from "@/LanguageContext";
 
 const ContactSection = () => {
+  const { t, toggleLang, lang } = useLanguage();
   return (
     <section id="contact" className="py-24 bg-background">
       <div className="container mx-auto px-4">
@@ -15,13 +17,13 @@ const ContactSection = () => {
             viewport={{ once: true }}
           >
             <span className="text-primary font-semibold uppercase tracking-widest text-sm font-body">
-              Get In Touch
+              {t("getInTouch")}
             </span>
             <h2 className="font-display text-4xl md:text-5xl font-bold text-foreground mt-3 mb-6">
-              Ready to start your adventure?
+              {t("ready")}
             </h2>
             <p className="text-muted-foreground font-body text-lg mb-10">
-              Have questions about our adventures? We'd love to help you plan your perfect outdoor getaway.
+              {t("questions")}
             </p>
 
             <div className="space-y-6">
@@ -30,7 +32,7 @@ const ContactSection = () => {
                   <Phone className="h-5 w-5 text-primary" />
                 </div>
                 <div>
-                  <div className="text-sm text-muted-foreground font-body">Call us</div>
+                  <div className="text-sm text-muted-foreground font-body">{t("callUs")}</div>
                   <div className="text-foreground font-semibold">+91 94837 57077</div>
                 </div>
               </div>
@@ -39,7 +41,7 @@ const ContactSection = () => {
                   <Mail className="h-5 w-5 text-primary" />
                 </div>
                 <div>
-                  <div className="text-sm text-muted-foreground font-body">Email us</div>
+                  <div className="text-sm text-muted-foreground font-body">{t("emailUs")}</div>
                   <div className="text-foreground font-semibold">tasktumakuru@gmail.com</div>
                 </div>
               </div>
@@ -48,8 +50,8 @@ const ContactSection = () => {
                   <MapPin className="h-5 w-5 text-primary" />
                 </div>
                 <div>
-                  <div className="text-sm text-muted-foreground font-body">Visit us</div>
-                  <div className="text-foreground font-semibold">Tumkur, Karnataka</div>
+                  <div className="text-sm text-muted-foreground font-body">{t("visitUs")}</div>
+                  <div className="text-foreground font-semibold">{t("tumkur")}, {t("Karnataka")}</div>
                 </div>
               </div>
             </div>
@@ -68,7 +70,7 @@ const ContactSection = () => {
               <Input placeholder="Phone Number" className="bg-background" />
               <Textarea placeholder="Tell us about your dream camping trip..." rows={5} className="bg-background" />
               <Button className="w-full bg-primary text-primary-foreground hover:bg-olive-light font-semibold py-6 text-lg">
-                Send Message
+                {t("sendMsg")}
               </Button>
             </form>
           </motion.div>

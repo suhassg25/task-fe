@@ -3,8 +3,10 @@ import { ArrowRight, MapPin, Star } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import heroImg from "../assets/hero.png";
+import { useLanguage } from "@/LanguageContext";
 
 const HeroSection = () => {
+  const { t, lang, toggleLang } = useLanguage();
   return (
     <section className="relative min-h-screen flex items-center overflow-hidden">
       <div className="absolute inset-0">
@@ -21,7 +23,7 @@ const HeroSection = () => {
             className="flex items-center gap-2 mb-6"
           >
             <span className="inline-flex items-center gap-1 bg-primary/100 px-4 py-1.5 rounded-full text-sm font-semibold">
-              <Star className="h-4 w-4" fill="currentColor" /> Top Rated Experience
+              <Star className="h-4 w-4" fill="currentColor" /> {t("topRated")}
             </span>
           </motion.div>
 
@@ -29,10 +31,10 @@ const HeroSection = () => {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.1 }}
-            className="font-display text-5xl md:text-7xl font-bold text-secondary-foreground leading-tight mb-6"
+            className={`font-display ${lang === "kn" ? "text-4xl md:text-6xl" : "text-5xl md:text-7xl"} font-bold text-secondary-foreground leading-tight mb-6`}
           >
-            Discover nature's beauty with{" "}
-            <span className="text-primary-foreground">luxury camping</span>
+            {t("discover")}{" "}
+            <span className={`${lang === "kn" ? "text-secondary-foreground" : "text-primary-foreground"}`}>{t("luxuryCamping")}</span>
           </motion.h1>
 
           <motion.p
@@ -41,8 +43,7 @@ const HeroSection = () => {
             transition={{ duration: 0.7, delay: 0.2 }}
             className="text-secondary-foreground/70 text-lg md:text-xl mb-8 max-w-lg font-body"
           >
-            Escape the ordinary and immerse yourself in breathtaking wilderness with our
-            handpicked glamping destinations across the world.
+            {t("explore")}
           </motion.p>
 
           <motion.div
@@ -53,12 +54,12 @@ const HeroSection = () => {
           >
             <Link to="/booking">
               <Button size="lg" className="bg-primary text-primary-foreground hover:bg-olive-light font-semibold text-lg px-8 py-6 gap-2">
-                Book Your Adventure <ArrowRight className="h-5 w-5" />
+                {t("bookAdventure")} <ArrowRight className="h-5 w-5" />
               </Button>
             </Link>
             <a href="#destinations" className="hidden">
               <Button size="lg" variant="outline" className="border-secondary-foreground/30 text-secondary-foreground hover:bg-secondary-foreground/10 text-lg px-8 py-6">
-                Explore Destinations
+                {t("exploreDestinations")}
               </Button>
             </a>
           </motion.div>
@@ -71,7 +72,7 @@ const HeroSection = () => {
           >
             <div className="flex items-center gap-2 text-secondary-foreground/60">
               <MapPin className="h-5 w-5 text-primary" />
-              <span className="font-body">EXCLUSIVE IN TUMUKUR</span>
+              <span className="font-body">{t("exclusive")}</span>
             </div>
             <div className="flex items-center gap-2 text-secondary-foreground/60">
               <Star className="h-5 w-5 text-warm-gold" fill="currentColor" />
