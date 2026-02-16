@@ -185,7 +185,7 @@ router.get('/admin/bookings', async (req, res) => {
     const key = req.query.key;
     if (key !== process.env.ADMIN_SECRET) return res.status(401).json({ error: 'Unauthorized' });
 
-    const bookings = await Booking.find({}).populate('serviceId');
+    const bookings = await Booking.find({}).populate('serviceId')
     res.json(bookings);
   } catch (err) {
     res.status(500).json({ error: err.message });
