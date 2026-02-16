@@ -57,7 +57,7 @@ router.get('/disabled-dates/:serviceId', async (req, res) => {
     const guestsPerDate = {};
     bookings.forEach(booking => {
       booking.selectedDates.forEach(date => {
-        const d = new Date(date).toISOString().slice(0,10);
+        const d = new Date(date).toISOString().slice(0, 10);
         guestsPerDate[d] = (guestsPerDate[d] || 0) + booking.guestsCount;
       });
     });
@@ -74,36 +74,43 @@ router.get('/disabled-dates/:serviceId', async (req, res) => {
 
 // Create Razorpay order
 router.post('/create-order', async (req, res) => {
+  const destinationsValues = {
+  "Adventure Sports": 4500,
+  "Trekking": 6000,
+  "Scuba Diving": 3800,
+  "Environmental Study": 5200,
+  "Cycling": 3800,
+  "Cultural Activities": 6000,
+  "Nature tours": 9000,
+  "Water Sports": 1000,
+  "Cinema": 2000,
+};
   try {
-    const { guests, checkIn, checkOut, name, email, phone } = req.body;
+    const { name, email, phone, destination, checkin, checkout, guests, noOfDays } = req.body;
 
-    const service = await Service.findById(serviceId);
-    if (!service) return res.status(404).json({ error: 'Service not found' });
-
-    const numDays = selectedDates.length;
-    const amount = service.pricePerNight * numDays * guestsCount * 100; // in paise
-
+    //const service = await Service.findById(serviceId);
+    //if (!service) return res.status(404).json({ error: 'Service not found' });
+let totalAmount = destinationsValues[destination] * guests * noOfDays;
     // Create Razorpay order
-    const options = {
+   /* const options = {
       amount,
       currency: "INR",
       receipt: `receipt_${Date.now()}`,
       payment_capture: 1
     };
-
-    const order = await razorpay.orders.create(options);
+*/
+    //const order = await razorpay.orders.create(options);
 
     // Create a booking with status pending
     const booking = new Booking({
-      serviceId,
-      guestsCount,
-      selectedDates,
+      //serviceId,
+      guests,
+      checkin,
+      checkout,
       name,
       email,
       phone,
-      totalAmount: amount / 100,
-      paymentId: order.id,
-      status: 'pending'
+      totalAmount,
     });
 
     await booking.save();
