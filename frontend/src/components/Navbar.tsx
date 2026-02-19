@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import  logo from "../assets/taskLogo.png"
+import logo from "../assets/taskLogo.png"
 import { useLanguage } from "../LanguageContext";
 
 
@@ -14,7 +14,7 @@ const Navbar = () => {
     { label: t("destinations"), path: "/#destinations" },
     { label: t("about"), path: "/#about" },
     { label: t("contact"), path: "/#contact" },
-    {label : t("admin"), path: "/admin"},
+    { label: t("admin"), path: "/admin" },
   ];
 
   const [open, setOpen] = useState(false);
@@ -24,7 +24,7 @@ const Navbar = () => {
     <nav className="fixed top-0 left-0 right-0 z-50 bg-secondary/95 backdrop-blur-md border-b border-secondary">
       <div className="container mx-auto flex items-center justify-between py-4 px-4">
         <Link to="/" className="flex items-center gap-2">
-          <img src={logo} alt="logo" className="h-8 w-8 text-primary" style={{borderRadius : 50,}} />
+          <img src={logo} alt="logo" className="h-8 w-8 text-primary" style={{ borderRadius: 50, }} />
           <span className={`font-display sm:text-lg md:text-2xl font-bold text-secondary-foreground`}>{t("title")}</span>
         </Link>
 
