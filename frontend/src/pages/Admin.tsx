@@ -28,7 +28,8 @@ const statusColor: Record<string, string> = {
 
 async function patchBooking( id: string, status: string) {
   const url = `https://task-fe-75yw.onrender.com/api/admin/booking/${id}?key=suhas_is_admin`;
-  await fetch(`http://localhost:5000/api/admin/booking/${id}?key=suhas_is_admin`, {
+  // const url = http://localhost:5000/api/admin/booking/${id}?key=suhas_is_admin
+  await fetch(url, {
     method: "PATCH",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ status }),
