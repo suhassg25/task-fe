@@ -2,6 +2,7 @@ import { number } from "framer-motion";
 import { get } from "http";
 import { Fullscreen, KanbanSquare } from "lucide-react";
 import { b } from "vitest/dist/chunks/suite.d.FvehnV49.js";
+import { AlertTitle } from "./components/ui/alert";
 
 export const translations = {
   en: {
@@ -44,11 +45,14 @@ export const translations = {
     FullName: "Full Name",
     Email: "Email",
     PhoneNumber: "Phone Number",
+    AltPhoneNumber: "Alternate Phone Number",
     Destination: "Destination",
     checkin: "Check-in",
     checkout: "Check-out",
     numberofGuests: "Number of Guests",
     proceedTopayment: "Proceed to Payment",
+    Age: "Age",
+    Health: "Health Information",
   },
   kn: {
     home: "ಮುಖಪುಟ",
@@ -90,11 +94,14 @@ export const translations = {
     FullName: "ಪೂರ್ಣ ಹೆಸರು",
     Email: "ಇಮೇಲ್",
     PhoneNumber: "ದೂರವಾಣಿ ಸಂಖ್ಯೆ",
+    AltPhoneNumber: "ಪರ್ಯಾಯ ದೂರವಾಣಿ ಸಂಖ್ಯೆ",
     Destination: "ಗಮ್ಯಸ್ಥಾನ",
     checkin: "ಚೆಕ್-ಇನ್",
     checkout: "ಚೆಕ್-ಔಟ್",
     numberofGuests: "ಅತಿಥಿಗಳ ಸಂಖ್ಯೆ",
     proceedTopayment: "ಪಾವತಿಗೆ ಮುಂದುವರಿಯಿರಿ",
+    Age: "ವಯಸ್ಸು",
+    Health: "ಆರೋಗ್ಯ ಮಾಹಿತಿ",
   },
 };
 

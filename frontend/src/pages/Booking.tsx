@@ -11,6 +11,8 @@ import Footer from "@/components/Footer";
 import { useLanguage } from "../LanguageContext";
 import { totalmem } from "os";
 import { set, setDate } from "date-fns";
+import { Textarea } from "@/components/ui/textarea";
+import { useNavigate } from "react-router-dom";
 
 const destinations = [
   { value: "Adventure Sports", label: "Adventure Sports — ₹4,500", },
@@ -24,47 +26,52 @@ const destinations = [
   { value: "Cinema", label: "Cinema — ₹2,000", },
 ];
 const Booking = () => {
+  const navigate = useNavigate();
   const { t, lang, toggleLang } = useLanguage();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
+    age: "",
     phone: "",
+    altPhone: "",
     destination: "",
     checkin: "",
     checkout: "",
     guests: "",
     noOfDays: 0,
     amount: 0,
+    hiText: "",
   });
-const value =async () => {
-      const val = fetch("https://task-fe-75yw.onrender.com/api/create-order", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          ...formData,
-          totalAmount: formData.noOfDays * parseInt(formData.destination.split("— ₹")[1]) * parseInt(formData.guests),
-        }),
-      });
-      const resp = await val;
-      if(resp.ok) {
-        toast.success("Booking successful!");
-      } else {
-        toast.error("Booking failed. Please try again.");
-      }
-    };
+  const value = async () => {
+    const val = fetch("https://task-fe-75yw.onrender.com/api/create-order", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        ...formData,
+        totalAmount: formData.noOfDays * parseInt(formData.destination.split("— ₹")[1]) * parseInt(formData.guests),
+      }),
+    });
+    const resp = await val;
+    if (resp.ok) {
+      toast.success("Booking successful!");
+      navigate("/terms&conditions");
+    } else {
+      toast.error("Booking failed. Please try again.");
+    }
+  };
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     const diff = Math.floor((new Date(formData.checkout).getTime() - new Date(formData.checkin).getTime()) / (1000 * 3600 * 24));
-    setFormData({ ...formData, noOfDays: diff});
+    setFormData({ ...formData, noOfDays: diff });
     value();
   };
 
   return (
     <div className="min-h-screen bg-background">
       <Navbar />
-      <div className="pt-28 pb-24">
+      <div className="pt-20 pb-24">
         <div className="container mx-auto px-4 max-w-2xl">
-          <Link to="/" className="inline-flex items-center gap-2 text-muted-foreground hover:text-primary mb-8 font-body">
+          <Link to="/" className="inline-flex items-center gap-2 text-muted-foreground hover:text-primary mb-4 font-body">
             <ArrowLeft className="h-4 w-4" /> {t("BacktoHome")}
           </Link>
 
@@ -72,17 +79,17 @@ const value =async () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
           >
-            <h1 className={`font-display text-4xl ${lang === "kn" ? "md:text-3xl" : "md:text-5xl"} font-bold text-foreground mb-3`}>
+            <h1 className={`font-display text-4xl ${lang === "kn" ? "md:text-3xl" : "md:text-5xl"} font-bold text-foreground mb-1`}>
               {t("bookYourAdventure")}
             </h1>
-            <p className={`text-muted-foreground font-body ${lang === "kn" ? "text-sm" : "text-lg"} mb-10`}>
+            <p className={`text-muted-foreground font-body ${lang === "kn" ? "text-sm" : "text-lg"} mb-3`}>
               {t("fillindetails")}
             </p>
 
             <form onSubmit={handleSubmit} className="bg-card rounded-2xl p-8 border border-border space-y-6">
               <div className="grid md:grid-cols-2 gap-4">
                 <div>
-                  <label className="text-sm font-semibold text-foreground font-body mb-2 block">{t("FullName")}</label>
+                  <label className="text-sm font-semibold text-foreground font-body mb-1 block">{t("FullName")}</label>
                   <Input
                     required
                     placeholder="John Doe"
@@ -92,7 +99,7 @@ const value =async () => {
                   />
                 </div>
                 <div>
-                  <label className="text-sm font-semibold text-foreground font-body mb-2 block">{t("Email")}</label>
+                  <label className="text-sm font-semibold text-foreground font-body mb-1 block">{t("Email")}</label>
                   <Input
                     required
                     type="email"
@@ -103,37 +110,67 @@ const value =async () => {
                   />
                 </div>
               </div>
-
-              <div>
-                <label className="text-sm font-semibold text-foreground font-body mb-2 block">{t("PhoneNumber")}</label>
-                <Input
-                  required
-                  placeholder="+91 98765 43210"
-                  className="bg-background"
-                  value={formData.phone}
-                  onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                />
-              </div>
-
-              <div>
-                <label className="text-sm font-semibold text-foreground font-body mb-2 block flex items-center gap-2">
-                  <MapPin className="h-4 w-4 text-primary" /> {t("Destination")}
-                </label>
-                <Select onValueChange={(v) => setFormData({ ...formData, destination: v })}>
-                  <SelectTrigger className="bg-background">
-                    <SelectValue placeholder="Choose a destination" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {destinations.map((d) => (
-                      <SelectItem key={d.value} value={d.value}>{d.label}</SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-
               <div className="grid md:grid-cols-2 gap-4">
                 <div>
-                  <label className="text-sm font-semibold text-foreground font-body mb-2 block flex items-center gap-2">
+                  <label className="text-sm font-semibold text-foreground font-body mb-1 block">{t("PhoneNumber")}</label>
+                  <Input
+                    required
+                    placeholder="+91 98xxx xxxxx"
+                    className="bg-background"
+                    value={formData.phone}
+                    onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                  />
+                </div>
+                <div>
+                  <label className="text-sm font-semibold text-foreground font-body mb-1 block">{t("AltPhoneNumber")}</label>
+                  <Input
+                    placeholder="+91 9xxxx xxxxx"
+                    className="bg-background"
+                    value={formData.altPhone}
+                    onChange={(e) => setFormData({ ...formData, altPhone: e.target.value })}
+                  />
+                </div>
+              </div>
+              <div className="grid md:grid-cols-2 gap-4">
+                <div>
+                  <label className="text-sm font-semibold text-foreground font-body mb-1 block">{t("Age")}</label>
+                  <Input
+                    required
+                    placeholder="Your age"
+                    className="bg-background"
+                    value={formData.age}
+                    onChange={(e) => setFormData({ ...formData, age: e.target.value })}
+                  />
+                </div>
+                <div>
+                  <label className="text-sm font-semibold text-foreground font-body mb-1 block flex items-center gap-2">
+                    <MapPin className="h-4 w-4 text-primary" /> {t("Destination")}
+                  </label>
+                  <Select onValueChange={(v) => setFormData({ ...formData, destination: v })}>
+                    <SelectTrigger className="bg-background">
+                      <SelectValue placeholder="Choose a destination" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {destinations.map((d) => (
+                        <SelectItem key={d.value} value={d.value}>{d.label}</SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
+              <div>
+                <label className="text-sm font-semibold text-foreground font-body mb-1 block">{t("Health")}</label>
+                <Textarea
+                  required
+                  placeholder="Describe your health information like Past medical conditions, current medications, allergies, physical limitations, etc. If none, write 'None'."
+                  className="bg-background"
+                  value={formData.hiText}
+                  onChange={(e) => setFormData({ ...formData, hiText: e.target.value })}
+                />
+              </div>
+              <div className="grid md:grid-cols-2 gap-4">
+                <div>
+                  <label className="text-sm font-semibold text-foreground font-body mb-1 block flex items-center gap-2">
                     <Calendar className="h-4 w-4 text-primary" /> {t("checkin")}
                   </label>
                   <Input
@@ -145,7 +182,7 @@ const value =async () => {
                   />
                 </div>
                 <div>
-                  <label className="text-sm font-semibold text-foreground font-body mb-2 block flex items-center gap-2">
+                  <label className="text-sm font-semibold text-foreground font-body mb-1 block flex items-center gap-2">
                     <Calendar className="h-4 w-4 text-primary" /> {t("checkout")}
                   </label>
                   <Input
@@ -161,7 +198,7 @@ const value =async () => {
               </div>
 
               <div>
-                <label className="text-sm font-semibold text-foreground font-body mb-2 block flex items-center gap-2">
+                <label className="text-sm font-semibold text-foreground font-body mb-1 block flex items-center gap-2">
                   <Users className="h-4 w-4 text-primary" /> {t("numberofGuests")}
                 </label>
                 <Select onValueChange={(v) => setFormData({ ...formData, guests: v })}>
@@ -183,9 +220,9 @@ const value =async () => {
                 <CreditCard className="h-5 w-5" /> {t("proceedTopayment")}
               </Button>
 
-              <p className="text-center text-muted-foreground text-sm font-body">
+              {/* <p className="text-center text-muted-foreground text-sm font-body">
                 Razorpay payment gateway will be integrated once backend is set up.
-              </p>
+              </p> */}
             </form>
           </motion.div>
         </div>

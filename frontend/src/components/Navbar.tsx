@@ -14,6 +14,7 @@ const Navbar = () => {
     { label: t("destinations"), path: "/#destinations" },
     { label: t("about"), path: "/#about" },
     { label: t("contact"), path: "/#contact" },
+    {label : t("admin"), path: "/admin"},
   ];
 
   const [open, setOpen] = useState(false);
@@ -24,7 +25,7 @@ const Navbar = () => {
       <div className="container mx-auto flex items-center justify-between py-4 px-4">
         <Link to="/" className="flex items-center gap-2">
           <img src={logo} alt="logo" className="h-8 w-8 text-primary" style={{borderRadius : 50,}} />
-          <span className="font-display text-2xl font-bold text-secondary-foreground">{t("title")}</span>
+          <span className={`font-display sm:text-lg md:text-2xl font-bold text-secondary-foreground`}>{t("title")}</span>
         </Link>
 
         <div className="hidden md:flex items-center gap-8">
@@ -40,11 +41,6 @@ const Navbar = () => {
         </div>
 
         <div className="hidden md:flex items-center gap-3">
-          <Link to="/admin">
-            <Button variant="ghost" className="text-secondary-foreground/80 hover:text-primary">
-              {t("admin")}
-            </Button>
-          </Link>
           <Link to="/booking">
             <Button className="bg-primary text-primary-foreground hover:bg-olive-light font-semibold px-6">
               {t("bookNow")}

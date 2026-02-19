@@ -26,8 +26,18 @@ const statusColor: Record<string, string> = {
   cancelled: "bg-destructive/15 text-destructive border-destructive/30",
 };
 
+async function patchBooking( id: string, status: string) {
+  const url = `https://task-fe-75yw.onrender.com/api/admin/booking/${id}?key=suhas_is_admin`;
+  await fetch(`http://localhost:5000/api/admin/booking/${id}?key=suhas_is_admin`, {
+    method: "PATCH",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ status }),
+  });
+}
+
 const Admin = () => {
-  const [mockBookings , setMockBookings] = useState([])
+  const [status, setStatus] = useState<keyof typeof statusColor>("pending");
+  const [mockBookings, setMockBookings] = useState([])
   useEffect(() => {
     async function fetchBookings() {
       const response = await fetch("https://task-fe-75yw.onrender.com/api/admin/bookings?key=suhas_is_admin");
@@ -35,7 +45,8 @@ const Admin = () => {
       setMockBookings(data);
     }
     fetchBookings();
-  },[])
+  }, [])
+  
   const [search, setSearch] = useState("");
   const filtered = mockBookings.filter(
     (b) =>
@@ -55,7 +66,7 @@ const Admin = () => {
             </Link>
             <h1 className="font-display text-2xl font-bold text-secondary-foreground">Admin Dashboard</h1>
           </div>
-          <Badge className="bg-primary/15 text-primary border-primary/30">Mock Data</Badge>
+          <Badge className="bg-primary/15 text-primary border-primary/30">Admin Booking Data</Badge>
         </div>
       </div>
 
@@ -98,7 +109,7 @@ const Admin = () => {
               <TableHeader>
                 <TableRow>
                   <TableHead className="font-body">Name</TableHead>
-                  <TableHead className="font-body">Destination</TableHead>
+                  {/* <TableHead className="font-body">Destination</TableHead> */}
                   <TableHead className="font-body">Check-in</TableHead>
                   <TableHead className="font-body">Check-out</TableHead>
                   <TableHead className="font-body">Guests</TableHead>
@@ -115,14 +126,18 @@ const Admin = () => {
                         <div className="text-xs text-muted-foreground">{b.email}</div>
                       </div>
                     </TableCell>
-                    <TableCell className="font-body">{b.destination}</TableCell>
-                    <TableCell className="font-body">{b.checkIn}</TableCell>
-                    <TableCell className="font-body">{b.checkOut}</TableCell>
+                    {/* <TableCell className="font-body">{b.destination}</TableCell> */}
+                    <TableCell className="font-body">{b.checkin[0].split("T")[0]}</TableCell>
+                    <TableCell className="font-body">{b.checkout[0].split("T")[0]}</TableCell>
                     <TableCell className="font-body">{b.guests}</TableCell>
-                    <TableCell className="font-semibold">{b.amount}</TableCell>
+                    <TableCell className="font-semibold">{b.totalAmount}</TableCell>
                     <TableCell>
                       <span className={`inline-flex px-2.5 py-0.5 rounded-full text-xs font-semibold border ${statusColor[b.status]}`}>
-                        {b.status}
+                        {b.status} <select value={status} onChange={(e) => {setStatus(e.target.value as keyof typeof statusColor); b.status = e.target.value; patchBooking(b._id, e.target.value);}} className="ml-2 px-2 py-1"> {Object.keys(statusColor).map((s) => (
+                          <option key={s} value={s}>
+                            {s}
+                          </option>))}
+                        </select>
                       </span>
                     </TableCell>
                   </TableRow>
