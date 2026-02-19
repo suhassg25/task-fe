@@ -14,7 +14,6 @@ const Navbar = () => {
     { label: t("destinations"), path: "/#destinations" },
     { label: t("about"), path: "/#about" },
     { label: t("contact"), path: "/#contact" },
-    { label: t("admin"), path: "/admin" },
   ];
 
   const [open, setOpen] = useState(false);
@@ -37,7 +36,11 @@ const Navbar = () => {
             >
               {link.label}
             </a>
+            
           ))}
+          <Link to="/admin" className="text-secondary-foreground/80 hover:text-primary transition-colors font-medium text-sm tracking-wide uppercase">
+              {t("admin")}
+          </Link>
         </div>
 
         <div className="hidden md:flex items-center gap-3">
@@ -68,6 +71,9 @@ const Navbar = () => {
               {link.label}
             </a>
           ))}
+          <Link to="/admin" className="block py-3 text-secondary-foreground/80 hover:text-primary font-medium">
+              {t("admin")}
+          </Link>
           <Link to="/booking" onClick={() => setOpen(false)}>
             <Button className="w-full mt-2 bg-primary text-primary-foreground">{t("bookNow")}</Button>
           </Link>
