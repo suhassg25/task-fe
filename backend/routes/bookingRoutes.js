@@ -86,7 +86,7 @@ router.post('/create-order', async (req, res) => {
   "Cinema": 2000,
 };
   try {
-    const { name, email, phone, destination, checkin, checkout, guests } = req.body;
+    const { name, email, phone, altPhone, destination, checkin, checkout, guests, age, hiText } = req.body;
 
     //const service = await Service.findById(serviceId);
     //if (!service) return res.status(404).json({ error: 'Service not found' });
@@ -109,8 +109,11 @@ let totalAmount = destinationsValues[destination] * guests * noOfDays;
       checkin,
       checkout,
       name,
+      age,
       email,
       phone,
+      altPhone,
+      hiText,
       totalAmount,
     });
 
@@ -198,6 +201,17 @@ router.delete('/admin/booking/:id', async (req, res) => {
     if (key !== process.env.ADMIN_SECRET) return res.status(401).json({ error: 'Unauthorized' });
 
     await Booking.findByIdAndDelete(req.params.id);
+    res.json({ success: true });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+router.patch('/admin/booking/:id', async (req, res) => {
+  try {
+    const key = req.query.key;
+    if (key !== process.env.ADMIN_SECRET) return res.status(401).json({ error: 'Unauthorized' });
+
+    await Booking.findByIdAndUpdate(req.params.id, req.body);
     res.json({ success: true });
   } catch (err) {
     res.status(500).json({ error: err.message });
