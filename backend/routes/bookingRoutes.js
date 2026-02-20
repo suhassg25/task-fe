@@ -74,24 +74,12 @@ router.get('/disabled-dates/:serviceId', async (req, res) => {
 
 // Create Razorpay order
 router.post('/create-order', async (req, res) => {
-  const destinationsValues = {
-  "Adventure Sports": 4500,
-  "Trekking": 6000,
-  "Scuba Diving": 3800,
-  "Environmental Study": 5200,
-  "Cycling": 3800,
-  "Cultural Activities": 6000,
-  "Nature tours": 9000,
-  "Water Sports": 1000,
-  "Cinema": 2000,
-};
+
   try {
-    const { name, email, phone, altPhone, destination, checkin, checkout, guests, age, hiText } = req.body;
+    const { name, email, phone, altPhone, destination, checkin, checkout, guests, age, hiText, totalAmount } = req.body;
 
     //const service = await Service.findById(serviceId);
     //if (!service) return res.status(404).json({ error: 'Service not found' });
-let noOfDays = Math.ceil((new Date(checkout).getTime() - new Date(checkin).getTime()) / (1000 * 3600 * 24));
-let totalAmount = destinationsValues[destination] * guests * noOfDays;
     // Create Razorpay order
    /* const options = {
       amount,
@@ -119,7 +107,7 @@ let totalAmount = destinationsValues[destination] * guests * noOfDays;
 
     await booking.save();
 
-    res.json({ amount: totalAmount, });
+    res.json({ booking });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }

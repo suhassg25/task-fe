@@ -53,6 +53,7 @@ export const translations = {
     proceedTopayment: "Proceed to Payment",
     Age: "Age",
     Health: "Health Information",
+    ourGallery: "Our Gallery of recent adventures",
   },
   kn: {
     home: "ಮುಖಪುಟ",
@@ -102,6 +103,7 @@ export const translations = {
     proceedTopayment: "ಪಾವತಿಗೆ ಮುಂದುವರಿಯಿರಿ",
     Age: "ವಯಸ್ಸು",
     Health: "ಆರೋಗ್ಯ ಮಾಹಿತಿ",
+    ourGallery: "ನಮ್ಮ ಇತ್ತೀಚಿನ ಸಾಹಸಗಳ ಗ್ಯಾಲರಿ",
   },
 };
 

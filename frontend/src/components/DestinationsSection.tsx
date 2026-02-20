@@ -81,7 +81,7 @@ const destinations = [
 const DestinationsSection = () => {
   const { t, toggleLang, lang } = useLanguage();
   return (
-    <section id="destinations" className="py-24 bg-background">
+    <section id="destinations" className="py-6 bg-background">
       <div className="container mx-auto px-4">
         <motion.div
           initial={{ opacity: 0, y: 20 }}

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { motion } from "framer-motion";
+import { motion, noop } from "framer-motion";
 import { Calendar, Users, MapPin, CreditCard, ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -39,16 +39,36 @@ const Booking = () => {
     checkout: "",
     guests: "",
     noOfDays: 0,
-    amount: 0,
     hiText: "",
   });
+  const destinationsValues = {
+      "Adventure Sports": 4500,
+      "Trekking": 6000,
+      "Scuba Diving": 3800,
+      "Environmental Study": 5200,
+      "Cycling": 3800,
+      "Cultural Activities": 6000,
+      "Nature tours": 9000,
+      "Water Sports": 1000,
+      "Cinema": 2000,
+    };
   const value = async () => {
-    const val = fetch("https://task-fe-75yw.onrender.com/api/create-order", {
+    let diff = 1;
+    if(new Date(formData.checkout).getTime() === new Date(formData.checkin).getTime()){
+      diff =1;
+    } else{
+    diff = Math.floor((new Date(formData.checkout).getTime() - new Date(formData.checkin).getTime()) / (1000 * 3600 * 24));
+    }
+      
+    setFormData({ ...formData, noOfDays: diff });
+    const url = `https://task-fe-75yw.onrender.com/api/create-order`;
+    const url1 = `http://localhost:5000/api/create-order`;
+    const val = fetch(url, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         ...formData,
-        totalAmount: formData.noOfDays * parseInt(formData.destination.split("— ₹")[1]) * parseInt(formData.guests),
+        totalAmount: diff * destinationsValues[formData.destination] * parseInt(formData.guests),
       }),
     });
     const resp = await val;
@@ -61,8 +81,7 @@ const Booking = () => {
   };
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const diff = Math.floor((new Date(formData.checkout).getTime() - new Date(formData.checkin).getTime()) / (1000 * 3600 * 24));
-    setFormData({ ...formData, noOfDays: diff });
+    
     value();
   };
 

@@ -1,0 +1,25 @@
+.mySwiper {
+  width: 100%;
+}
+
+.slide-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 70vh;
+}
+.swiper{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.media {
+  height: 70vh;
+  width: auto;
+  object-fit: contain; /* shows full image/video */
+}
+.swiper-pagination{
+  color: gray;
+  font-weight: 700;
+  font-size: medium;
+}
