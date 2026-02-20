@@ -8,7 +8,7 @@ import '../module.css/Swiper.css'
 
 import { Pagination, Navigation } from 'swiper/modules';
 
-export default function App({ docs }) {
+export default function SwiperCarousal({ docs }) {
   return (
     <Swiper
       pagination={{ type: 'fraction' }}
