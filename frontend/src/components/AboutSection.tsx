@@ -4,6 +4,7 @@ import person2 from "@/assets/person1.jpg";
 import person3 from "@/assets/person2.jpg";
 import person1 from "@/assets/person3.jpg";
 import person4 from "@/assets/person4.jpg";
+import person5 from "@/assets/person5.jpg";
 
 const trustedPeople = [
   {
@@ -15,6 +16,11 @@ const trustedPeople = [
     name: "Dr. Lekhanaraj",
     role: "President",
     image: person3,
+  },
+  {
+    name: "Radha himantaraju",
+    role: "Secretary",
+    image: person5,
   },
   {
     name: "Himantaraju G",
