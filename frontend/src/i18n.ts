@@ -54,6 +54,8 @@ export const translations = {
     Age: "Age",
     Health: "Health Information",
     ourGallery: "Our Gallery of recent adventures",
+    trst : "Trusted Partners",
+    collab : "We collaborate with experienced professionals and trusted partners to deliver safe, exciting, and unforgettable adventures."
   },
   kn: {
     home: "ಮುಖಪುಟ",
@@ -104,6 +106,8 @@ export const translations = {
     Age: "ವಯಸ್ಸು",
     Health: "ಆರೋಗ್ಯ ಮಾಹಿತಿ",
     ourGallery: "ನಮ್ಮ ಇತ್ತೀಚಿನ ಸಾಹಸಗಳ ಗ್ಯಾಲರಿ",
+    trst : "ನಂಬಿಗಸ್ತ ಪಾಲುದಾರರು",
+    collab : "ನಾವು ಅನುಭವಜ್ಞರು ಮತ್ತು ನಂಬಿಗಸ್ತ ಪಾಲುದಾರರೊಂದಿಗೆ ಸಹಕರಿಸುತ್ತೇವೆ ಸುರಕ್ಷಿತ, ರೋಮಾಂಚಕಾರಿ ಮತ್ತು ಮರೆಯಲಾಗದ ಸಾಹಸಗಳನ್ನು ನೀಡಲು ಬಯಸುತ್ತೇವೆ."
   },
 };
 
