@@ -1,16 +1,28 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
 import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
-import '../module.css/Swiper.css'
+import '../module.css/Swiper.css';
 
 import { Pagination, Navigation } from 'swiper/modules';
 
 export default function SwiperCarousal({ docs }) {
+  const swiperRef = useRef(null);
+
+  const handleSlideChange = () => {
+    const videos = document.querySelectorAll('.swiper-slide video');
+
+    videos.forEach((video) => {
+      video.pause(); 
+    });
+  };
+
   return (
     <Swiper
+      onSwiper={(swiper) => (swiperRef.current = swiper)}
+      onSlideChange={handleSlideChange}
       pagination={{ type: 'fraction' }}
       navigation
       modules={[Pagination, Navigation]}
@@ -22,8 +34,8 @@ export default function SwiperCarousal({ docs }) {
             <video
               controls
               preload="metadata"
-              style={{ objectFit: 'cover' }}
               className="media"
+              style={{ objectFit: 'cover' }}
             >
               <source src={doc.url} type="video/mp4" />
             </video>
@@ -31,8 +43,8 @@ export default function SwiperCarousal({ docs }) {
             <img
               src={doc.url}
               alt={doc.title}
-              style={{ objectFit: 'cover' }}
               className="media"
+              style={{ objectFit: 'cover' }}
             />
           )}
         </SwiperSlide>
