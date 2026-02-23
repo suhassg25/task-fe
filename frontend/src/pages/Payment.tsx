@@ -23,7 +23,7 @@ export default function Payment() {
       const url1 = "http://localhost:5000";
 
       try {
-        const resp = await fetch(`${url1}/api/booking/${bookingId}`, {
+        const resp = await fetch(`${url}/api/booking/${bookingId}`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -46,7 +46,7 @@ export default function Payment() {
     }
   }, []);
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  /* const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     if (!utr && !screenshot) {
@@ -83,7 +83,7 @@ export default function Payment() {
 
     setLoading(false);
   };
-
+*/
   const showErrorBorder = error && !utr && !screenshot;
 
   return (
@@ -109,7 +109,7 @@ export default function Payment() {
         </h2>
 
         <form
-          onSubmit={handleSubmit}
+          // onSubmit={handleSubmit}
           className="max-w-md mx-auto space-y-6"
         >
           <img
