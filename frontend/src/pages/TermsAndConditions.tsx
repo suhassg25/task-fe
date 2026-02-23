@@ -3,10 +3,13 @@ import { useLanguage } from "@/LanguageContext";
 import { Link } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
 import Navbar from "@/components/Navbar";
+import { useNavigate } from "react-router-dom";
 
 export default function TermsAndConditions() {
   const { t, lang, toggleLang } = useLanguage();
   const [accepted, setAccepted] = useState(false);
+  const navigate = useNavigate();
+
 
   return (
     <div className="min-h-screen bg-background">
@@ -63,6 +66,9 @@ export default function TermsAndConditions() {
             disabled={!accepted}
             className={`px-4 py-2 rounded-md text-white ${accepted ? "bg-blue-600 hover:bg-blue-700" : "bg-gray-400 cursor-not-allowed"
               }`}
+              onClick={()=>{
+                navigate("/scanPayment")
+              }}
           >
             Continue
           </button>

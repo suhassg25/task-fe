@@ -5,6 +5,9 @@ import person3 from "@/assets/person2.jpg";
 import person1 from "@/assets/person3.jpg";
 import person4 from "@/assets/person4.jpg";
 import person5 from "@/assets/person5.jpg";
+import person6 from "@/assets/person6.jpg";
+import person7 from "@/assets/person7.jpg";
+import person8 from "@/assets/person8.jpg";
 
 const trustedPeople = [
   {
@@ -32,6 +35,24 @@ const trustedPeople = [
     role : "Trusty",
     image : person4,
 
+  },
+  {
+    name : "DR. Girish L P",
+    role : "Trusty",
+    image : person6,
+
+  },
+  {
+    name : "Akshaya kumari N",
+    role : "Trusty",
+    image : person7,
+
+  },
+  {
+    name : "Santosh R",
+    role : "Trusty",
+    image : person8,
+
   }
 ];
 
@@ -55,8 +76,7 @@ const AboutSection = () => {
           </p>
         </div>
 
-        {/* 3 Cards */}
-        <div className="grid md:grid-cols-5 gap-10">
+        <div className="grid md:grid-cols-4 gap-10">
           {trustedPeople.map((person, index) => (
             <motion.div
               key={index}
@@ -68,8 +88,8 @@ const AboutSection = () => {
               <img
                 src={person.image}
                 alt={person.name}
-                className="w-80 object-contain object-cover text-center"
-                style={{height : 280}}
+                className={`w-80 object-contain object-cover text-center  ${person.role === "Associated Partner" ? "" : "rounded-full mx-auto"}`}
+                style={{height : 300}}
               />
               <div className="p-6 text-center">
                 <h3 className="text-xl font-semibold text-foreground">

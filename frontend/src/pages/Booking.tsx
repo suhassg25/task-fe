@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { motion, noop } from "framer-motion";
-import { Calendar, Users, MapPin, CreditCard, ArrowLeft } from "lucide-react";
+import { Calendar, Users, MapPin, CreditCard, ArrowLeft, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -28,6 +28,7 @@ const destinations = [
 const Booking = () => {
   const navigate = useNavigate();
   const { t, lang, toggleLang } = useLanguage();
+  const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -42,51 +43,82 @@ const Booking = () => {
     hiText: "",
   });
   const destinationsValues = {
-      "Adventure Sports": 4500,
-      "Trekking": 6000,
-      "Scuba Diving": 3800,
-      "Environmental Study": 5200,
-      "Cycling": 3800,
-      "Cultural Activities": 6000,
-      "Nature tours": 9000,
-      "Water Sports": 1000,
-      "Cinema": 2000,
-    };
+    "Adventure Sports": 4500,
+    "Trekking": 6000,
+    "Scuba Diving": 3800,
+    "Environmental Study": 5200,
+    "Cycling": 3800,
+    "Cultural Activities": 6000,
+    "Nature tours": 9000,
+    "Water Sports": 1000,
+    "Cinema": 2000,
+  };
+  const validation = (target, value) => {
+    if (isNaN(Number(value)) || Number(value) <= 0) {
+      target.classList.add("border-red-500", "focus-visible:ring-red-500");
+      target.classList.remove("border-input", "focus-visible:ring-ring");
+      toast.warning(`Please enter a valid number in ${target.name} field.`);
+      return false;
+    }
+    target.classList.remove("border-red-500", "focus-visible:ring-red-500");
+    target.classList.add("border-input", "focus-visible:ring-ring");
+    return true;
+  };
   const value = async () => {
-    let diff = 1;
-    if(new Date(formData.checkout).getTime() === new Date(formData.checkin).getTime()){
-      diff =1;
-    } else{
-    diff = Math.floor((new Date(formData.checkout).getTime() - new Date(formData.checkin).getTime()) / (1000 * 3600 * 24));
+    try {
+      setIsLoading(true);
+      let diff = 1;
+      if (new Date(formData.checkout).getTime() === new Date(formData.checkin).getTime()) {
+        diff = 1;
+      } else {
+        diff = Math.floor((new Date(formData.checkout).getTime() - new Date(formData.checkin).getTime()) / (1000 * 3600 * 24));
+      }
+
+      setFormData({ ...formData, noOfDays: diff });
+      const url = `https://task-fe-75yw.onrender.com/api/create-order`;
+      const url1 = `http://localhost:5000/api/create-order`;
+      const val = fetch(url, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          ...formData,
+          totalAmount: diff * destinationsValues[formData.destination] * parseInt(formData.guests),
+        }),
+      });
+      const resp = await val;
+      const data = await resp.json();
+      if (resp.ok) {
+        setTimeout(() => {
+          navigate("/terms&conditions");
+          localStorage.setItem("bookingId", data.booking._id);
+        }, 1500);
+      } else {
+        setIsLoading(false);
+        toast.error("Booking failed. Please try again.");
+      }
+    } catch (e) {
+      setIsLoading(false);
+      toast.error("An error occurred. Please try again.");
     }
-      
-    setFormData({ ...formData, noOfDays: diff });
-    const url = `https://task-fe-75yw.onrender.com/api/create-order`;
-    const url1 = `http://localhost:5000/api/create-order`;
-    const val = fetch(url, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        ...formData,
-        totalAmount: diff * destinationsValues[formData.destination] * parseInt(formData.guests),
-      }),
-    });
-    const resp = await val;
-    if (resp.ok) {
-      toast.success("Booking successful!");
-      navigate("/terms&conditions");
-    } else {
-      toast.error("Booking failed. Please try again.");
-    }
+
   };
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    
     value();
   };
 
   return (
     <div className="min-h-screen bg-background">
+      {isLoading && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-md bg-black/40">
+          <div className="flex flex-col items-center gap-4 text-white">
+            <Loader2 className="h-12 w-12 animate-spin" />
+            <p className="text-lg font-semibold">
+              Processing your booking...
+            </p>
+          </div>
+        </div>
+      )}
       <Navbar />
       <div className="pt-20 pb-24">
         <div className="container mx-auto px-4 max-w-2xl">
@@ -112,6 +144,7 @@ const Booking = () => {
                   <Input
                     required
                     placeholder="John Doe"
+                    type="text"
                     className="bg-background"
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
@@ -136,8 +169,12 @@ const Booking = () => {
                     required
                     placeholder="+91 98xxx xxxxx"
                     className="bg-background"
+                    type="tel"
                     value={formData.phone}
-                    onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                    onChange={(e) => {
+                      setFormData({ ...formData, phone: e.target.value });
+                      validation(e.target, e.target.value)
+                    }}
                   />
                 </div>
                 <div>
@@ -145,8 +182,12 @@ const Booking = () => {
                   <Input
                     placeholder="+91 9xxxx xxxxx"
                     className="bg-background"
+                    type="tel"
                     value={formData.altPhone}
-                    onChange={(e) => setFormData({ ...formData, altPhone: e.target.value })}
+                    onChange={(e) => {
+                      setFormData({ ...formData, altPhone: e.target.value });
+                      validation(e.target, e.target.value)
+                    }}
                   />
                 </div>
               </div>
@@ -155,10 +196,14 @@ const Booking = () => {
                   <label className="text-sm font-semibold text-foreground font-body mb-1 block">{t("Age")}</label>
                   <Input
                     required
+                    type="tel"
                     placeholder="Your age"
                     className="bg-background"
                     value={formData.age}
-                    onChange={(e) => setFormData({ ...formData, age: e.target.value })}
+                    onChange={(e) => {
+                      setFormData({ ...formData, age: e.target.value });
+                      validation(e.target, e.target.value)
+                    }}
                   />
                 </div>
                 <div>
@@ -234,14 +279,21 @@ const Booking = () => {
 
               <Button
                 type="submit"
+                disabled={isLoading}
                 className="w-full bg-primary text-primary-foreground hover:bg-olive-light font-semibold py-6 text-lg gap-2"
               >
-                <CreditCard className="h-5 w-5" /> {t("proceedTopayment")}
+                {isLoading ? (
+                  <>
+                    <Loader2 className="h-5 w-5 animate-spin" />
+                    Processing...
+                  </>
+                ) : (
+                  <>
+                    <CreditCard className="h-5 w-5" />
+                    {t("proceedTopayment")}
+                  </>
+                )}
               </Button>
-
-              {/* <p className="text-center text-muted-foreground text-sm font-body">
-                Razorpay payment gateway will be integrated once backend is set up.
-              </p> */}
             </form>
           </motion.div>
         </div>

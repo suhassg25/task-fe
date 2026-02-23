@@ -10,6 +10,7 @@ import AdminDashboard from "./pages/Admin";
 import NotFound from "./pages/NotFound";
 import TermsAndConditions from "./pages/TermsAndConditions";
 import { LanguageProvider } from "./LanguageContext";
+import Payment from "./pages/Payment";
 
 const queryClient = new QueryClient();
 
@@ -26,6 +27,7 @@ const App = () => (
           <Route path="/admin" element={<Admin />} />
           <Route path="/admin/dashboard" element={<AdminDashboard />} />
           <Route path="/terms&conditions" element={<TermsAndConditions />} />
+          <Route path="/scanPayment" element={<Payment />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
