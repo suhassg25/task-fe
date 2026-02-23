@@ -37,7 +37,7 @@ const trustedPeople = [
 
   },
   {
-    name : "DR. Girish L P",
+    name : "Dr. Girish L P",
     role : "Trusty",
     image : person6,
 
