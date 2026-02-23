@@ -205,5 +205,14 @@ router.patch('/admin/booking/:id', async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 });
+router.get('/booking/:id', async (req, res) => {
+  try {
+    const booking = await Booking.findById(req.params.id).populate('serviceId');
+
+    res.json({ booking });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
 
 export default router;
