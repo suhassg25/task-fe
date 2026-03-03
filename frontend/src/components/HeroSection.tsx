@@ -38,10 +38,10 @@ const HeroSection = () => {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.1 }}
-            className={`font-display ${lang === "kn" ? "text-4xl md:text-6xl" : "text-5xl md:text-7xl"} font-bold text-secondary-foreground leading-tight mb-6`}
+            className={`font-display text-2xl md:text-5xl font-bold text-secondary-foreground leading-tight mb-6`}
           >
             {t("discover")}{" "}
-            <span className={`${lang === "kn" ? "text-secondary-foreground" : "text-primary-foreground"}`}>{t("luxuryCamping")}</span>
+            <span className="text-secondary-foreground" >{t("luxuryCamping")}</span>
           </motion.h1>
 
           <motion.p
