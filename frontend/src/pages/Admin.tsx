@@ -24,6 +24,7 @@ const statusColor: Record<string, string> = {
   confirmed: "bg-primary/15 text-primary border-primary/30",
   pending: "bg-warm-gold/15 text-warm-gold border-warm-gold/30",
   cancelled: "bg-destructive/15 text-destructive border-destructive/30",
+  "Waiting...": "bg-blue-500/15 text-blue-600 border-blue-500/30",
 };
 
 async function patchBooking( id: string, status: string) {
@@ -159,10 +160,6 @@ const Admin = () => {
             </div>
           )}
         </div>
-
-        <p className="text-center text-muted-foreground text-sm font-body mt-8">
-          This is mock data. Enable Lovable Cloud to store real bookings and integrate Razorpay payments.
-        </p>
       </div>
     </div>
   );

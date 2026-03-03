@@ -259,7 +259,7 @@ router.patch(
 
       // Optional: mark as paid only if proof exists
       if (utr || req.file) {
-        updateData.status = "paid";
+        updateData.status = "Waiting...";
       }
 
       const booking = await Booking.findByIdAndUpdate(
