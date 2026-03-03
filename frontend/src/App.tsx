@@ -11,6 +11,7 @@ import NotFound from "./pages/NotFound";
 import TermsAndConditions from "./pages/TermsAndConditions";
 import { LanguageProvider } from "./LanguageContext";
 import Payment from "./pages/Payment";
+import GettingTouch from "./pages/GettingTouch";
 
 const queryClient = new QueryClient();
 
@@ -28,6 +29,7 @@ const App = () => (
           <Route path="/admin/dashboard" element={<AdminDashboard />} />
           <Route path="/terms&conditions" element={<TermsAndConditions />} />
           <Route path="/scanPayment" element={<Payment />} />
+          <Route path="/gettingTouch" element={<GettingTouch />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

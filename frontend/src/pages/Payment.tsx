@@ -5,18 +5,28 @@ import { ArrowLeft } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { QRCodeSVG } from "qrcode.react";
+import { toast } from "sonner";
+import { useNavigate } from "react-router-dom";
 
 export default function Payment() {
-  const { t } = useLanguage();
-
+  const { t, lang, toggleLang } = useLanguage();
+  const navigate = useNavigate();
   const [amount, setAmount] = useState<number>(0);
+  const [booking, setBooking] = useState({});
   const [utr, setUtr] = useState("");
   const [screenshot, setScreenshot] = useState<File | null>(null);
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
+  const upiId = "8310506750@ybl";
+  const name = "Developers Bank";
 
+  const upiUrl = `upi://pay?pa=${upiId}&pn=${encodeURIComponent(
+    name
+  )}&am=${amount}&cu=INR&tn=${encodeURIComponent("Booking Payment")}`;
+
+  const bookingId = localStorage.getItem("bookingId");
   useEffect(() => {
-    const bookingId = localStorage.getItem("bookingId");
 
     async function fetchBooking() {
       const url = "https://task-fe-75yw.onrender.com";
@@ -33,6 +43,7 @@ export default function Payment() {
         if (resp.ok) {
           const data = await resp.json();
           setAmount(data.booking.totalAmount);
+          setBooking(data.booking);
         } else {
           console.error("Failed to fetch booking details");
         }
@@ -46,7 +57,7 @@ export default function Payment() {
     }
   }, []);
 
-  /* const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     if (!utr && !screenshot) {
@@ -67,15 +78,15 @@ export default function Payment() {
     }
 
     try {
-      const resp = await fetch(`${url}/api/payment-proof`, {
-        method: "POST",
+      const resp = await fetch(`${url}/api/booking/${bookingId}`, {
+        method: "PATCH",
         body: formData,
       });
 
       if (resp.ok) {
-        alert("Payment proof submitted successfully!");
+        toast.success("Payment proof submitted successfully!");
       } else {
-        alert("Failed to submit payment proof.");
+        toast.error("Failed to submit payment proof.");
       }
     } catch (err) {
       console.error(err);
@@ -83,7 +94,7 @@ export default function Payment() {
 
     setLoading(false);
   };
-*/
+
   const showErrorBorder = error && !utr && !screenshot;
 
   return (
@@ -103,19 +114,19 @@ export default function Payment() {
 
       <div className="container mx-auto px-4 py-12">
         <h2 className="text-2xl font-semibold mb-6 text-center">
-          Make Payment by scanning our QR Code and add UTR details or upload
-          screenshot for{" "}
-          <span className="font-bold text-primary">₹{amount}</span>
+          {lang === "en" ? `Make Payment by scanning our QR Code and add UTR details or upload
+          screenshot for ₹ ` : `ನಮ್ಮ QR ಕೋಡ್ ಅನ್ನು ಸ್ಕ್ಯಾನ್ ಮಾಡುವ ಮೂಲಕ ಪಾವತಿ ಮಾಡಿ ಮತ್ತು UTR ವಿವರಗಳನ್ನು ಸೇರಿಸಿ ಅಥವಾ ಸ್ಕ್ರೀನ್‌ಶಾಟ್ ಅನ್ನು ಅಪ್‌ಲೋಡ್ ಮಾಡಿ ₹ `}
+          <span className="font-bold text-4xl ">{amount}</span>
         </h2>
 
         <form
-          // onSubmit={handleSubmit}
+          onSubmit={handleSubmit}
           className="max-w-md mx-auto space-y-6"
         >
-          <img
-            src="/qr-code.png"
-            alt="QR Code"
-            className="mx-auto w-64 h-64 object-contain"
+          <QRCodeSVG
+            value={upiUrl}
+            size={256}
+            className="mx-auto"
           />
 
           <Input
@@ -126,11 +137,10 @@ export default function Payment() {
               setUtr(e.target.value);
               setError(false);
             }}
-            className={`bg-background ${
-              showErrorBorder
-                ? "border-red-500 focus-visible:ring-red-500"
-                : ""
-            }`}
+            className={`bg-background ${showErrorBorder
+              ? "border-red-500 focus-visible:ring-red-500"
+              : ""
+              }`}
           />
 
           <Input
@@ -140,11 +150,10 @@ export default function Payment() {
               setScreenshot(e.target.files?.[0] || null);
               setError(false);
             }}
-            className={`bg-background ${
-              showErrorBorder
-                ? "border-red-500 focus-visible:ring-red-500"
-                : ""
-            }`}
+            className={`bg-background ${showErrorBorder
+              ? "border-red-500 focus-visible:ring-red-500"
+              : ""
+              }`}
           />
 
           {error && (
@@ -152,10 +161,11 @@ export default function Payment() {
               Please enter UTR number or upload screenshot.
             </p>
           )}
-
+          <Link to="/gettingTouch" className="block text-center text-primary hover:underline">
           <Button type="submit" disabled={loading} className="w-full">
             {loading ? "Submitting..." : "Submit Payment Proof"}
           </Button>
+          </Link>
         </form>
       </div>
     </div>

@@ -91,7 +91,7 @@ const Booking = () => {
         setTimeout(() => {
           navigate("/terms&conditions");
           localStorage.setItem("bookingId", data.booking._id);
-        }, 1500);
+        }, 100);
       } else {
         setIsLoading(false);
         toast.error("Booking failed. Please try again.");
