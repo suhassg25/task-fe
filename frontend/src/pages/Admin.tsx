@@ -148,7 +148,7 @@ const Admin = () => {
                       </span>
                     </TableCell>
                     <TableCell className="font-semibold">{b.utrNumber ? b.utrNumber : <img
-                      src={`/uploads/${b.paymentScreenshot}`}
+                      src={`https://task-fe-75yw.onrender.com/uploads/${b.paymentScreenshot}`}
                       alt="Payment Proof"
                       style={{ width: "100px", cursor: "zoom-in" }}
                     />}</TableCell>
