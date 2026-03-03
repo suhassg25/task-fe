@@ -110,12 +110,14 @@ const Admin = () => {
               <TableHeader>
                 <TableRow>
                   <TableHead className="font-body">Name</TableHead>
-                  {/* <TableHead className="font-body">Destination</TableHead> */}
+                  <TableHead className="font-body">Destination</TableHead>
                   <TableHead className="font-body">Check-in</TableHead>
                   <TableHead className="font-body">Check-out</TableHead>
                   <TableHead className="font-body">Guests</TableHead>
                   <TableHead className="font-body">Amount</TableHead>
+                  <TableHead className="font-body">Alternative Mobile</TableHead>
                   <TableHead className="font-body">Status</TableHead>
+                  <TableHead className="font-body">Payment Proof</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -125,13 +127,16 @@ const Admin = () => {
                       <div>
                         <div className="font-semibold text-card-foreground">{b.name}</div>
                         <div className="text-xs text-muted-foreground">{b.email}</div>
+                        <div className="text-xs text-muted-foreground">{b.phone}</div>
                       </div>
                     </TableCell>
                     {/* <TableCell className="font-body">{b.destination}</TableCell> */}
+                    <TableCell className="font-body">{b.destination}</TableCell>
                     <TableCell className="font-body">{b.checkin[0].split("T")[0]}</TableCell>
                     <TableCell className="font-body">{b.checkout[0].split("T")[0]}</TableCell>
                     <TableCell className="font-body">{b.guests}</TableCell>
                     <TableCell className="font-semibold">{b.totalAmount}</TableCell>
+                    <TableCell className="font-semibold">{b.altPhone}</TableCell>
                     <TableCell>
                       <span className={`inline-flex px-2.5 py-0.5 rounded-full text-xs font-semibold border ${statusColor[b.status]}`}>
                         {b.status} <select value={status} onChange={(e) => {setStatus(e.target.value as keyof typeof statusColor); b.status = e.target.value; patchBooking(b._id, e.target.value);}} className="ml-2 px-2 py-1"> {Object.keys(statusColor).map((s) => (
@@ -141,6 +146,7 @@ const Admin = () => {
                         </select>
                       </span>
                     </TableCell>
+                    <TableCell className="font-semibold">{b.utrNumber ? b.utrNumber : b.paymentScreenshot}</TableCell>
                   </TableRow>
                 ))}
               </TableBody>
