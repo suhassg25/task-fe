@@ -4,7 +4,34 @@ import crypto from 'crypto';
 import Service from '../models/Service.js';
 import Booking from '../models/Booking.js';
 import nodemailer from 'nodemailer';
+import multer from "multer";
+import path from "path";
+import fs from "fs";
+const uploadPath = path.join(process.cwd(), "uploads");
+if (!fs.existsSync(uploadPath)) {
+  fs.mkdirSync(uploadPath, { recursive: true });
+}
 
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, uploadPath);
+  },
+  filename: function (req, file, cb) {
+    cb(null, Date.now() + path.extname(file.originalname));
+  },
+});
+
+const upload = multer({
+  storage,
+  limits: { fileSize: 5 * 1024 * 1024 }, // 5MB limit
+  fileFilter: function (req, file, cb) {
+    if (file.mimetype.startsWith("image/")) {
+      cb(null, true);
+    } else {
+      cb(new Error("Only images allowed"));
+    }
+  },
+});
 const router = express.Router();
 /*
 // Razorpay instance
@@ -214,5 +241,43 @@ router.get('/booking/:id', async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 });
+router.patch(
+  '/booking/:id',
+  upload.single("screenshot"), // must match frontend key
+  async (req, res) => {
+    try {
+      const { utr } = req.body;
+
+      const updateData = {};
+
+      if (utr) updateData.utrNumber = utr;
+
+      if (req.file) {
+        updateData.paymentScreenshot = req.file.path;
+      }
+
+      // Optional: mark as paid only if proof exists
+      if (utr || req.file) {
+        updateData.status = "paid";
+      }
+
+      const booking = await Booking.findByIdAndUpdate(
+        req.params.id,
+        { $set: updateData },
+        { new: true }
+      ).populate("serviceId");
+
+      if (!booking) {
+        return res.status(404).json({ error: "Booking not found" });
+      }
+
+      res.json({ success: true, booking });
+
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({ error: err.message });
+    }
+  }
+);
 
 export default router;

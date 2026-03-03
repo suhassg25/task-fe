@@ -13,6 +13,8 @@ const bookingSchema = new mongoose.Schema({
   totalAmount: { type: Number, required: true },
   hiText: { type: String, required: true },
   status: { type: String, enum: ['pending', 'paid'], default: 'pending' },
+  utrNumber: { type: String },
+  paymentScreenshot: { type: String },
 });
 
 export default mongoose.model('Booking', bookingSchema);
