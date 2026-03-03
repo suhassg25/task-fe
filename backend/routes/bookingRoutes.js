@@ -123,6 +123,7 @@ router.post('/create-order', async (req, res) => {
       guests,
       checkin,
       checkout,
+      destination,
       name,
       age,
       email,
