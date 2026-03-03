@@ -7,10 +7,12 @@ import nodemailer from 'nodemailer';
 import multer from "multer";
 import path from "path";
 import fs from "fs";
+const app = express();
 const uploadPath = path.join(process.cwd(), "uploads");
 if (!fs.existsSync(uploadPath)) {
   fs.mkdirSync(uploadPath, { recursive: true });
 }
+app.use("/uploads", express.static(path.join(process.cwd(), "uploads")));
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -254,7 +256,7 @@ router.patch(
       if (utr) updateData.utrNumber = utr;
 
       if (req.file) {
-        updateData.paymentScreenshot = req.file.path;
+        updateData.paymentScreenshot = req.file.filename;
       }
 
       // Optional: mark as paid only if proof exists

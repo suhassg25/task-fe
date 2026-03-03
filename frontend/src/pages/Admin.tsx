@@ -27,7 +27,7 @@ const statusColor: Record<string, string> = {
   "Waiting...": "bg-blue-500/15 text-blue-600 border-blue-500/30",
 };
 
-async function patchBooking( id: string, status: string) {
+async function patchBooking(id: string, status: string) {
   const url = `https://task-fe-75yw.onrender.com/api/admin/booking/${id}?key=suhas_is_admin`;
   // const url = http://localhost:5000/api/admin/booking/${id}?key=suhas_is_admin
   await fetch(url, {
@@ -48,7 +48,7 @@ const Admin = () => {
     }
     fetchBookings();
   }, [])
-  
+
   const [search, setSearch] = useState("");
   const filtered = mockBookings.filter(
     (b) =>
@@ -140,14 +140,18 @@ const Admin = () => {
                     <TableCell className="font-semibold">{b.altPhone}</TableCell>
                     <TableCell>
                       <span className={`inline-flex px-2.5 py-0.5 rounded-full text-xs font-semibold border ${statusColor[b.status]}`}>
-                        {b.status} <select value={status} onChange={(e) => {setStatus(e.target.value as keyof typeof statusColor); b.status = e.target.value; patchBooking(b._id, e.target.value);}} className="ml-2 px-2 py-1"> {Object.keys(statusColor).map((s) => (
+                        {b.status} <select value={status} onChange={(e) => { setStatus(e.target.value as keyof typeof statusColor); b.status = e.target.value; patchBooking(b._id, e.target.value); }} className="ml-2 px-2 py-1"> {Object.keys(statusColor).map((s) => (
                           <option key={s} value={s}>
                             {s}
                           </option>))}
                         </select>
                       </span>
                     </TableCell>
-                    <TableCell className="font-semibold">{b.utrNumber ? b.utrNumber : b.paymentScreenshot}</TableCell>
+                    <TableCell className="font-semibold">{b.utrNumber ? b.utrNumber : <img
+                      src={`/uploads/${b.paymentScreenshot}`}
+                      alt="Payment Proof"
+                      style={{ width: "100px", cursor: "zoom-in" }}
+                    />}</TableCell>
                   </TableRow>
                 ))}
               </TableBody>
