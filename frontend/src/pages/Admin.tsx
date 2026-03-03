@@ -40,6 +40,7 @@ async function patchBooking(id: string, status: string) {
 const Admin = () => {
   const [status, setStatus] = useState<keyof typeof statusColor>("pending");
   const [mockBookings, setMockBookings] = useState([])
+  const [previewImage, setPreviewImage] = useState<string | null>(null);
   useEffect(() => {
     async function fetchBookings() {
       const response = await fetch("https://task-fe-75yw.onrender.com/api/admin/bookings?key=suhas_is_admin");
@@ -147,11 +148,21 @@ const Admin = () => {
                         </select>
                       </span>
                     </TableCell>
-                    <TableCell className="font-semibold">{b.utrNumber ? b.utrNumber : <img
+                    <TableCell className="font-semibold">
+                      {b.paymentScreenshot && <div className="font-semibold text-card-foreground">
+                     <img
                       src={`https://task-fe-75yw.onrender.com/uploads/${b.paymentScreenshot}`}
                       alt="Payment Proof"
-                      style={{ width: "100px", cursor: "zoom-in" }}
-                    />}</TableCell>
+                      style={{ width: "100px"}}
+                      onClick={() =>
+                        setPreviewImage(
+                          `https://task-fe-75yw.onrender.com/uploads/${b.paymentScreenshot}`
+                        )
+                      }
+                    />
+                    </div>}
+                      <div className="font-semibold text-card-foreground">UTR : {b.utrNumber}</div>
+                    </TableCell>
                   </TableRow>
                 ))}
               </TableBody>
@@ -161,6 +172,34 @@ const Admin = () => {
           {filtered.length === 0 && (
             <div className="p-12 text-center text-muted-foreground font-body">
               No bookings found matching your search.
+            </div>
+          )}
+          {previewImage && (
+            <div
+              onClick={() => setPreviewImage(null)}
+              style={{
+                position: "fixed",
+                top: 0,
+                left: 0,
+                width: "100vw",
+                height: "100vh",
+                backgroundColor: "rgba(0,0,0,0.8)",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                zIndex: 9999,
+                cursor: "zoom-out",
+              }}
+            >
+              <img
+                src={previewImage}
+                alt="Preview"
+                style={{
+                  maxWidth: "90%",
+                  maxHeight: "90%",
+                  borderRadius: "8px",
+                }}
+              />
             </div>
           )}
         </div>
