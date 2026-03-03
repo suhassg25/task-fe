@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { MapPin, Star, ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
-import destLake from "@/assets/Adv sports.jpeg";
+import destLake from "@/assets/Adv sports.jpg";
 import destMountain from "@/assets/trekking.jpeg";
 import destForest from "@/assets/scuba.jpeg";
 import destDesert from "@/assets/Env Studies.jpeg";

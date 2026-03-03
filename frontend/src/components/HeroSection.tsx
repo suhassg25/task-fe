@@ -2,15 +2,22 @@ import { motion } from "framer-motion";
 import { ArrowRight, MapPin, Star } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import heroImg from "../assets/hero.png";
 import { useLanguage } from "@/LanguageContext";
+import heroVideo from "@/assets/heroVid.mp4";
 
 const HeroSection = () => {
   const { t, lang, toggleLang } = useLanguage();
   return (
     <section className="relative min-h-screen flex items-center overflow-hidden">
       <div className="absolute inset-0">
-        <img src={heroImg} alt="Luxury glamping in nature" className="w-full h-full object-cover" />
+        <video
+          className="w-full h-full object-cover"
+          src={heroVideo}
+          autoPlay
+          loop
+          muted
+          playsInline
+        />
         <div className="absolute inset-0 bg-gradient-to-r from-secondary/50 via-secondary/30 to-transparent" />
       </div>
 
