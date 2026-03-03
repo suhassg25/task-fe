@@ -85,6 +85,7 @@ export default function Payment() {
 
       if (resp.ok) {
         toast.success("Payment proof submitted successfully!");
+        navigate("/gettingTouch");
       } else {
         toast.error("Failed to submit payment proof.");
       }
@@ -161,11 +162,9 @@ export default function Payment() {
               Please enter UTR number or upload screenshot.
             </p>
           )}
-          <Link to="/gettingTouch" className="block text-center text-primary hover:underline">
           <Button type="submit" disabled={loading} className="w-full">
             {loading ? "Submitting..." : "Submit Payment Proof"}
           </Button>
-          </Link>
         </form>
       </div>
     </div>
