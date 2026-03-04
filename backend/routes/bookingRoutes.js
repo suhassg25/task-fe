@@ -104,18 +104,18 @@ router.get('/disabled-dates/:serviceId', async (req, res) => {
 router.post('/create-order', async (req, res) => {
 
   try {
-    const { name, email, phone, altPhone, destination, checkin, checkout, guests, age, hiText, totalAmount } = req.body;
+    const { name, email, phone, altPhone, destination, checkin, checkout, guests, age, hiText, totalAmount, guestDetails } = req.body;
 
     //const service = await Service.findById(serviceId);
     //if (!service) return res.status(404).json({ error: 'Service not found' });
     // Create Razorpay order
-   /* const options = {
-      amount,
-      currency: "INR",
-      receipt: `receipt_${Date.now()}`,
-      payment_capture: 1
-    };
-*/
+    /* const options = {
+       amount,
+       currency: "INR",
+       receipt: `receipt_${Date.now()}`,
+       payment_capture: 1
+     };
+ */
     //const order = await razorpay.orders.create(options);
 
     // Create a booking with status pending
@@ -132,6 +132,13 @@ router.post('/create-order', async (req, res) => {
       altPhone,
       hiText,
       totalAmount,
+      guestDetails: guestDetails?.map(g => ({
+        name: g.name,
+        age: Number(g.age),
+        bloodGroup: g.bloodGroup,
+        diabetes: g.diabetes,
+      })),
+
     });
 
     await booking.save();

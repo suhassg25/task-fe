@@ -41,6 +41,7 @@ const Booking = () => {
     guests: "",
     noOfDays: 0,
     hiText: "",
+    guestDetails: [],
   });
   const destinationsValues = {
     "Adventure Sports": 4500,
@@ -74,10 +75,26 @@ const Booking = () => {
         diff = Math.floor((new Date(formData.checkout).getTime() - new Date(formData.checkin).getTime()) / (1000 * 3600 * 24));
       }
 
-      setFormData({ ...formData, noOfDays: diff });
+        const payload = {
+      ...formData,
+      guests: Number(formData.guests),
+      age: Number(formData.age),
+      noOfDays: diff,
+      totalAmount:
+        diff *
+        destinationsValues[formData.destination] *
+        Number(formData.guests),
+      guestDetails: formData.guestDetails.map((g) => ({
+        name: g.name,
+        age: Number(g.age),
+        bloodGroup: g.bloodGroup,
+        diabetes: g.diabetes,
+      })),
+    };
+
       const url = `https://task-fe-75yw.onrender.com/api/create-order`;
       const url1 = `http://localhost:5000/api/create-order`;
-      const val = fetch(url, {
+      const val = await fetch(url, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -85,12 +102,11 @@ const Booking = () => {
           totalAmount: diff * destinationsValues[formData.destination] * parseInt(formData.guests),
         }),
       });
-      const resp = await val;
-      const data = await resp.json();
-      if (resp.ok) {
+      const data = await val.json();
+      if (val.ok) {
         setTimeout(() => {
-          navigate("/terms&conditions");
           localStorage.setItem("bookingId", data.booking._id);
+          navigate("/terms&conditions");
         }, 100);
       } else {
         setIsLoading(false);
@@ -105,6 +121,12 @@ const Booking = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     value();
+  };
+
+  const updateGuest = (index, field, value) => {
+    const updated = [...formData.guestDetails];
+    updated[index][field] = value;
+    setFormData({ ...formData, guestDetails: updated });
   };
 
   return (
@@ -265,16 +287,91 @@ const Booking = () => {
                 <label className="text-sm font-semibold text-foreground font-body mb-1 block flex items-center gap-2">
                   <Users className="h-4 w-4 text-primary" /> {t("numberofGuests")}
                 </label>
-                <Select onValueChange={(v) => setFormData({ ...formData, guests: v })}>
+                <Select
+                  onValueChange={(v) => {
+                    const count = parseInt(v);
+
+                    setFormData((prev) => ({
+                      ...prev,
+                      guests: v,
+                      guestDetails: Array.from({ length: count }, (_, i) =>
+                        prev.guestDetails[i] || {
+                          name: "",
+                          age: "",
+                          bloodGroup: "",
+                          diabetes: false,
+                        }
+                      ),
+                    }));
+                  }}
+                >
                   <SelectTrigger className="bg-background">
                     <SelectValue placeholder="Select guests" />
                   </SelectTrigger>
                   <SelectContent>
-                    {[1, 2, 3, 4, 5, 6].map((n) => (
-                      <SelectItem key={n} value={String(n)}>{n} {n === 1 ? "Guest" : "Guests"}</SelectItem>
+                    {[1, 2, 3, 4, 5, 6,].map((n) => (
+                      <SelectItem key={n} value={String(n)}>
+                        {n} {n === 1 ? "Guest" : "Guests"}
+                      </SelectItem>
                     ))}
                   </SelectContent>
                 </Select>
+                <br/>
+                {formData.guestDetails.length > 0 && (
+                  <div className="space-y-6">
+                    {formData.guestDetails.map((guest, index) => (
+                      <div
+                        key={index}
+                        className="border border-border rounded-xl p-5 bg-background space-y-4"
+                      >
+                        <h3 className="font-semibold text-lg">
+                          Guest {index + 1} Details
+                        </h3>
+
+                        <div className="grid md:grid-cols-2 gap-4">
+                          <Input
+                            required
+                            placeholder="Name"
+                            value={guest.name}
+                            onChange={(e) =>
+                              updateGuest(index, "name", e.target.value)
+                            }
+                          />
+
+                          <Input
+                            required
+                            type="tel"
+                            placeholder="Age"
+                            value={guest.age}
+                            onChange={(e) =>
+                              updateGuest(index, "age", e.target.value)
+                            }
+                          />
+                        </div>
+
+                        <Input
+                          required
+                          placeholder="Blood Group (Eg: O+)"
+                          value={guest.bloodGroup}
+                          onChange={(e) =>
+                            updateGuest(index, "bloodGroup", e.target.value)
+                          }
+                        />
+
+                        <div className="flex items-center gap-2">
+                          <input
+                            type="checkbox"
+                            checked={guest.diabetes}
+                            onChange={(e) =>
+                              updateGuest(index, "diabetes", e.target.checked)
+                            }
+                          />
+                          <label>Diabetes</label>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
               </div>
 
               <Button

@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { Users, Calendar, IndianRupee, TrendingUp, ArrowLeft, Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import React from "react";
 import { Link } from "react-router-dom";
 import {
   Table,
@@ -41,6 +42,7 @@ const Admin = () => {
   const [status, setStatus] = useState<keyof typeof statusColor>("pending");
   const [mockBookings, setMockBookings] = useState([])
   const [previewImage, setPreviewImage] = useState<string | null>(null);
+  const [expandedRow, setExpandedRow] = useState<string | null>(null);
   useEffect(() => {
     async function fetchBookings() {
       const response = await fetch("https://task-fe-75yw.onrender.com/api/admin/bookings?key=suhas_is_admin");
@@ -115,7 +117,7 @@ const Admin = () => {
                   <TableHead className="font-body">Destination</TableHead>
                   <TableHead className="font-body">Check-in</TableHead>
                   <TableHead className="font-body">Check-out</TableHead>
-                  <TableHead className="font-body">Guests</TableHead>
+                  <TableHead className="font-body">Guests Info</TableHead>
                   <TableHead className="font-body">Amount</TableHead>
                   <TableHead className="font-body">Alternative Mobile</TableHead>
                   <TableHead className="font-body">Status</TableHead>
@@ -124,49 +126,103 @@ const Admin = () => {
               </TableHeader>
               <TableBody>
                 {filtered.map((b) => (
-                  <TableRow key={b.id}>
-                    <TableCell>
-                      <div>
-                        <div className="font-semibold text-card-foreground">{b.name}</div>
-                        <div className="text-xs text-muted-foreground">{b.email}</div>
-                        <div className="text-xs text-muted-foreground">{b.phone}</div>
-                      </div>
-                    </TableCell>
-                    {/* <TableCell className="font-body">{b.destination}</TableCell> */}
-                    <TableCell className="font-body">{b.destination}</TableCell>
-                    <TableCell className="font-body">{b.checkin[0].split("T")[0]}</TableCell>
-                    <TableCell className="font-body">{b.checkout[0].split("T")[0]}</TableCell>
-                    <TableCell className="font-body">{b.guests}</TableCell>
-                    <TableCell className="font-semibold">{b.totalAmount}</TableCell>
-                    <TableCell className="font-semibold">{b.altPhone}</TableCell>
-                    <TableCell>
-                      <span className={`inline-flex px-2.5 py-0.5 rounded-full text-xs font-semibold border ${statusColor[b.status]}`}>
-                        {b.status} <select value={status} onChange={(e) => { setStatus(e.target.value as keyof typeof statusColor); b.status = e.target.value; patchBooking(b._id, e.target.value); }} className="ml-2 px-2 py-1"> {Object.keys(statusColor).map((s) => (
-                          <option key={s} value={s}>
-                            {s}
-                          </option>))}
-                        </select>
-                      </span>
-                    </TableCell>
-                    <TableCell className="font-semibold">
-                      {b.paymentScreenshot && <div className="font-semibold text-card-foreground">
-                     <img
-                      src={`https://task-fe-75yw.onrender.com/uploads/${b.paymentScreenshot}`}
-                      alt="Payment Proof"
-                      style={{ width: "100px"}}
-                      onClick={() =>
-                        setPreviewImage(
-                          `https://task-fe-75yw.onrender.com/uploads/${b.paymentScreenshot}`
-                        )
-                      }
-                    />
-                    </div>}
-                      <div className="font-semibold text-card-foreground">UTR : {b.utrNumber}</div>
-                    </TableCell>
-                  </TableRow>
+                  <React.Fragment key={b._id}>
+                    <TableRow>
+                      <TableCell>
+                        <div>
+                          <div className="font-semibold text-card-foreground">{b.name}</div>
+                          <div className="text-xs text-muted-foreground">{b.email}</div>
+                          <div className="text-xs text-muted-foreground">{b.phone}</div>
+                        </div>
+                      </TableCell>
+                      {/* <TableCell className="font-body">{b.destination}</TableCell> */}
+                      <TableCell className="font-body">{b.destination}</TableCell>
+                      <TableCell className="font-body">{b.checkin[0].split("T")[0]}</TableCell>
+                      <TableCell className="font-body">{b.checkout[0].split("T")[0]}</TableCell>
+                      <TableCell className="font-body">{b.guests} {"  "}
+                        <button
+                          onClick={() =>
+                            setExpandedRow(expandedRow === b._id ? null : b._id.toString())
+                          }
+                          className="text-primary underline text-sm"
+                        >
+                          {expandedRow === b._id ? "Hide" : "View"}
+                        </button>
+                      </TableCell>
+                      <TableCell className="font-semibold">{b.totalAmount}</TableCell>
+                      <TableCell className="font-semibold">{b.altPhone}</TableCell>
+                      <TableCell>
+                        <span className={`inline-flex px-2.5 py-0.5 rounded-full text-xs font-semibold border ${statusColor[b.status]}`}>
+                          {b.status} <select value={status} onChange={(e) => { setStatus(e.target.value as keyof typeof statusColor); b.status = e.target.value; patchBooking(b._id, e.target.value); }} className="ml-2 px-2 py-1"> {Object.keys(statusColor).map((s) => (
+                            <option key={s} value={s}>
+                              {s}
+                            </option>))}
+                          </select>
+                        </span>
+                      </TableCell>
+                      <TableCell className="font-semibold">
+                        {b.paymentScreenshot && <div className="font-semibold text-card-foreground">
+                          <img
+                            src={`https://task-fe-75yw.onrender.com/uploads/${b.paymentScreenshot}`}
+                            alt="Payment Proof"
+                            style={{ width: "100px" }}
+                            onClick={() =>
+                              setPreviewImage(
+                                `https://task-fe-75yw.onrender.com/uploads/${b.paymentScreenshot}`
+                              )
+                            }
+                          />
+                        </div>}
+                        <div className="font-semibold text-card-foreground">UTR : {b.utrNumber}</div>
+                      </TableCell>
+                    </TableRow>
+                    {expandedRow === b._id.toString() && (
+                      <TableRow>
+                        <TableCell colSpan={9} className="py-4">
+                          <div className="space-y-3">
+                            {b.guestDetails && b.guestDetails.length > 0 ? (
+                              b.guestDetails.map((guest, index: number) => (
+                                <div
+                                  key={index}
+                                  className="rounded-md border bg-secondary/80 px-4 py-3 text-sm"
+                                >
+                                  <div className="flex flex-wrap md:flex-nowrap md:justify-start gap-20 text-white text-lg">
+                                    <div>
+                                      <span>NAME:</span>{"  "}
+                                      {guest.name.toUpperCase()}
+                                    </div>
+
+                                    <div>
+                                      <span >AGE:</span>{"  "}
+                                      {guest.age}
+                                    </div>
+
+                                    <div>
+                                      <span >BLOOD:</span>{"  "}
+                                      {guest.bloodGroup.toUpperCase()}
+                                    </div>
+
+                                    <div>
+                                      <span >DIABETIC:</span>{"  "}
+                                      {guest.diabetes ? "Yes" : "No"}
+                                    </div>
+                                  </div>
+                                </div>
+                              ))
+                            ) : (
+                              <div className="text-muted-foreground text-sm">
+                                No guest details available.
+                              </div>
+                            )}
+                          </div>
+                        </TableCell>
+                      </TableRow>
+                    )}
+                  </React.Fragment>
                 ))}
               </TableBody>
             </Table>
+
           </div>
 
           {filtered.length === 0 && (
@@ -204,7 +260,7 @@ const Admin = () => {
           )}
         </div>
       </div>
-    </div>
+    </div >
   );
 };
 
