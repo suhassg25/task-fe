@@ -12,7 +12,7 @@ import TermsAndConditions from "./pages/TermsAndConditions";
 import { LanguageProvider } from "./LanguageContext";
 import Payment from "./pages/Payment";
 import GettingTouch from "./pages/GettingTouch";
-import FloatingButtons from "./components/FloatingButtons";
+import FloatingButtons from "./components/FloatingButtonsWrapper";
 
 const queryClient = new QueryClient();
 

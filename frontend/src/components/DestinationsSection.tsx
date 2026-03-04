@@ -87,12 +87,12 @@ const DestinationsSection = () => {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center mb-16"
+          className="text-center mb-10"
         >
           <span className="text-primary font-semibold uppercase tracking-widest text-sm font-body">
             {t("ourDestinations")}
           </span>
-          <h2 className="font-display text-4xl md:text-5xl font-bold text-foreground mt-3">
+          <h2 className="font-display text-4xl md:text-5xl font-bold text-foreground mt-1">
             {t("findEscape")}
           </h2>
           <p className="text-muted-foreground mt-4 max-w-2xl mx-auto font-body text-lg">

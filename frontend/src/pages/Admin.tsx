@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import React from "react";
 import { Link } from "react-router-dom";
+import { generateBookingPDF } from "../components/generateBookingPDF";
 import {
   Table,
   TableBody,
@@ -122,6 +123,7 @@ const Admin = () => {
                   <TableHead className="font-body">Alternative Mobile</TableHead>
                   <TableHead className="font-body">Status</TableHead>
                   <TableHead className="font-body">Payment Proof</TableHead>
+                  <TableHead className="font-body">Download</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -174,6 +176,9 @@ const Admin = () => {
                           />
                         </div>}
                         <div className="font-semibold text-card-foreground">UTR : {b.utrNumber}</div>
+                      </TableCell>
+                      <TableCell>
+                        <Button onClick={async () =>await generateBookingPDF(b)} > PDF </Button>
                       </TableCell>
                     </TableRow>
                     {expandedRow === b._id.toString() && (

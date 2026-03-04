@@ -8,7 +8,7 @@ import heroVideo from "@/assets/heroVid.mp4";
 const HeroSection = () => {
   const { t, lang, toggleLang } = useLanguage();
   return (
-    <section className="relative min-h-screen flex items-center overflow-hidden mb-10">
+    <section className="relative min-h-screen flex items-center overflow-hidden mb-16">
       <div className="absolute inset-0">
         <video
           className="w-full h-full object-cover"

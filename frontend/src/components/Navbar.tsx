@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import logo from "../assets/taskLogo.png"
+import logo from "../assets/logo.jpg"
 import { useLanguage } from "../LanguageContext";
 
 
@@ -31,10 +31,10 @@ const Navbar = () => {
 
   return (
     <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300
-        ${location.pathname.includes("booking") || location.pathname.includes("admin") ? "bg-secondary/95 backdrop-blur-md border-b border-secondary" : scrolled ? "bg-secondary/95 backdrop-blur-md border-b border-secondary" : "bg-transparent"}`}>
+        ${location.pathname.includes("booking") || location.pathname.includes("admin") || location.pathname.includes("terms&conditions") ? "bg-secondary/95 backdrop-blur-md border-b border-secondary" : scrolled ? "bg-secondary/95 backdrop-blur-md border-b border-secondary" : "bg-transparent"}`}>
       <div className="container mx-auto flex items-center justify-between py-4 px-4">
         <Link to="/" className="flex items-center gap-2">
-          <img src={logo} alt="logo" className="h-8 w-8 text-primary" style={{ borderRadius: 50, }} />
+          <img src={logo} alt="logo" className="h-12 w-12 text-primary" style={{ borderRadius: 50, }} />
           <span className={`font-display sm:text-lg md:text-2xl font-bold text-secondary-foreground`}>{t("title")}</span>
         </Link>
 
