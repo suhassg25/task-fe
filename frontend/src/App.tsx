@@ -12,6 +12,7 @@ import TermsAndConditions from "./pages/TermsAndConditions";
 import { LanguageProvider } from "./LanguageContext";
 import Payment from "./pages/Payment";
 import GettingTouch from "./pages/GettingTouch";
+import FloatingButtons from "./components/FloatingButtons";
 
 const queryClient = new QueryClient();
 
@@ -32,6 +33,7 @@ const App = () => (
           <Route path="/gettingTouch" element={<GettingTouch />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
+        <FloatingButtons />
       </BrowserRouter>
       </LanguageProvider>
     </TooltipProvider>

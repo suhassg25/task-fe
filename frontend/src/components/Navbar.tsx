@@ -31,8 +31,7 @@ const Navbar = () => {
 
   return (
     <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300
-        ${scrolled ? "bg-secondary/95 backdrop-blur-md border-b border-secondary" : "bg-transparent"}
-      `}>
+        ${location.pathname.includes("booking") || location.pathname.includes("admin") ? "bg-secondary/95 backdrop-blur-md border-b border-secondary" : scrolled ? "bg-secondary/95 backdrop-blur-md border-b border-secondary" : "bg-transparent"}`}>
       <div className="container mx-auto flex items-center justify-between py-4 px-4">
         <Link to="/" className="flex items-center gap-2">
           <img src={logo} alt="logo" className="h-8 w-8 text-primary" style={{ borderRadius: 50, }} />
@@ -48,10 +47,10 @@ const Navbar = () => {
             >
               {link.label}
             </a>
-            
+
           ))}
           <Link to="/admin" className="text-secondary-foreground/80 hover:text-primary transition-colors font-medium text-sm tracking-wide uppercase">
-              {t("admin")}
+            {t("admin")}
           </Link>
         </div>
 
@@ -84,7 +83,7 @@ const Navbar = () => {
             </a>
           ))}
           <Link to="/admin" className="block py-3 text-secondary-foreground/80 hover:text-primary font-medium">
-              {t("admin")}
+            {t("admin")}
           </Link>
           <Link to="/booking" onClick={() => setOpen(false)}>
             <Button className="w-full mt-2 bg-primary text-primary-foreground">{t("bookNow")}</Button>
