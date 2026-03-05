@@ -4,7 +4,7 @@ import FloatingButtons from "./FloatingButtons";
 const FloatingButtonsWrapper = () => {
   const location = useLocation();
 
-  if (location.pathname.startsWith("/admin")) {
+  if (location.pathname.startsWith("/admin") || location.pathname.startsWith("/terms&conditions")) {
     return null;
   }
 

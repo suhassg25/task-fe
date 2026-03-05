@@ -26,7 +26,7 @@ export default function TermsAndConditions() {
           <h2 className="text-lg font-semibold">{lang === "en" ? "Terms And Conditions" : "ಬಳಕೆಯ ನಿಯಮಗಳು"}</h2>
 
           {/* Terms text */}
-          <div className="max-h-40 overflow-y-auto text-sm text-gray-600 space-y-2">
+          <div className=" text-sm text-gray-600 space-y-2">
             <p>
               {lang === "en" ? "By participating in this community activity, you confirm that your involvement is voluntary and based on your own decision." : "ಈ ಸಮುದಾಯ ಚಟುವಟಿಕೆಯಲ್ಲಿ ಭಾಗವಹಿಸುವ ಮೂಲಕ, ನಿಮ್ಮ ಭಾಗವಹಿಸುವಿಕೆ ಸಂಪೂರ್ಣವಾಗಿ ಸ್ವಯಂಪ್ರೇರಿತವಾಗಿದ್ದು ನಿಮ್ಮ ಸ್ವಂತ ನಿರ್ಧಾರದ ಮೇಲೆ ಆಧಾರಿತವಾಗಿದೆ ಎಂದು ನೀವು ದೃಢಪಡಿಸುತ್ತೀರಿ."}
             </p>
@@ -36,7 +36,7 @@ export default function TermsAndConditions() {
             </p>
 
             <p>
-              {lang === "en" ? "Any consequences resulting from your actions, negligence, or failure to follow community guidelines will be your sole responsibility and will not be attributed to the organizers, coordinators, or hosting community." : "ಈ ಚಟುವಟಿಕೆಯ ಸಮಯದಲ್ಲಿ ನಿಮ್ಮ ವೈಯಕ್ತಿಕ ನಡೆನುಡಿ, ವರ್ತನೆ, ಆರೋಗ್ಯ ಸ್ಥಿತಿ ಮತ್ತು ಭದ್ರತೆಗೆ ನೀವು ಸಂಪೂರ್ಣ ಹೊಣೆಗಾರಿಕೆಯನ್ನು ಒಪ್ಪಿಕೊಳ್ಳುತ್ತೀರಿ."}
+              {lang === "en" ? "Any consequences resulting from your actions, negligence, or failure to follow community guidelines will be your sole responsibility and will not be attributed to the organizers, coordinators, or hosting community." : "ನಿಮ್ಮ ನಿರ್ಲಕ್ಷ್ಯ ಅಥವಾ ಸಮುದಾಯ ಮಾರ್ಗಸೂಚಿಗಳನ್ನು ಅನುಸರಿಸಲು ವಿಫಲವಾದ ಕಾರಣ ಉಂಟಾಗುವ ಯಾವುದೇ ಪರಿಣಾಮಗಳಿಗೆ ನೀವು ಮಾತ್ರ ಜವಾಬ್ದಾರರಾಗಿರುತ್ತೀರಿ ಮತ್ತು ಅದನ್ನು ಸಂಘಟಕರು, ಸಂಯೋಜಕರು ಅಥವಾ ಆತಿಥೇಯ ಸಮುದಾಯದ ಮೇಲೆ ಹೊರಿಸಲಾಗುವುದಿಲ್ಲ."}
             </p>
 
             <p>

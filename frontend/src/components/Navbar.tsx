@@ -34,7 +34,7 @@ const Navbar = () => {
         ${location.pathname.includes("booking") || location.pathname.includes("admin") || location.pathname.includes("terms&conditions") ? "bg-secondary/95 backdrop-blur-md border-b border-secondary" : scrolled ? "bg-secondary/95 backdrop-blur-md border-b border-secondary" : "bg-transparent"}`}>
       <div className="container mx-auto flex items-center justify-between py-4 px-4">
         <Link to="/" className="flex items-center gap-2">
-          <img src={logo} alt="logo" className="h-12 w-12 text-primary" style={{ borderRadius: 50, }} />
+          <img src={logo} alt="logo" className="h-10 w-10 text-primary" style={{ borderRadius: 50, }} />
           <span className={`font-display sm:text-lg md:text-2xl font-bold text-secondary-foreground`}>{t("title")}</span>
         </Link>
 

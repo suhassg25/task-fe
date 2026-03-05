@@ -1,6 +1,6 @@
 import { Mountain } from "lucide-react";
 import { Link } from "react-router-dom";
-import logo from "../assets/taskLogo.png"
+import logo from "../assets/logo.jpg"
 import { useLanguage } from "@/LanguageContext";
 
 const Footer = () => {
