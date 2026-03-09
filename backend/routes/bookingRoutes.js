@@ -43,11 +43,12 @@ const razorpay = new Razorpay({
 */
 
 // Nodemailer setup
+console.log("Email user:", process.env.EMAIL_USER, "Email pass:", process.env.EMAIL_PASS);
 const transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
-    user: process.env.EMAIL_USER, // Your gmail
-    pass: process.env.EMAIL_PASS, // Your app password or gmail password
+    user: "sgsuhas75@gmail.com", 
+    pass: "hfpr ukvf drxp ahnk", 
   }
 });
 
@@ -152,27 +153,12 @@ router.post('/create-order', async (req, res) => {
 // Verify payment signature and confirm booking
 router.post('/verify-payment', async (req, res) => {
   try {
-    const { razorpay_order_id, razorpay_payment_id, razorpay_signature, bookingId } = req.body;
-
-    // Verify signature
-    const hmac = crypto.createHmac('sha256', process.env.RAZORPAY_KEY_SECRET);
-    hmac.update(razorpay_order_id + "|" + razorpay_payment_id);
-    const generatedSignature = hmac.digest('hex');
-
-    if (generatedSignature !== razorpay_signature) {
-      return res.status(400).json({ error: 'Invalid signature' });
-    }
-
-    // Update booking status
+    const { bookingId } = req.body;
+    
     const booking = await Booking.findById(bookingId);
     if (!booking) return res.status(404).json({ error: 'Booking not found' });
 
-    booking.status = 'paid';
-    booking.paymentId = razorpay_payment_id;
-    await booking.save();
-
-    // Send confirmation email
-    const mailOptions = {
+      const mailOptions = {
       from: process.env.EMAIL_USER,
       to: booking.email,
       subject: `Booking Confirmation - ${booking._id}`,
@@ -181,15 +167,20 @@ router.post('/verify-payment', async (req, res) => {
 Your booking for service has been confirmed.
 
 Booking ID: ${booking._id}
-Service: ${booking.serviceId}
-Dates: ${booking.selectedDates.map(d => new Date(d).toLocaleDateString()).join(", ")}
-Guests: ${booking.guestsCount}
+Service: ${booking.destination}
+Dates: ${new Date(booking.checkin).toISOString().slice(0, 10)} to ${new Date(booking.checkout).toISOString().slice(0, 10)}
+Guests: ${booking.guests}
+
+Details of Peoples : ${booking.guestDetails.map(g => `\n* ${g.name}, Age: ${g.age}, Blood Group: ${g.bloodGroup}, Diabetes: ${g.diabetes ? "Yes" : "No"}`).join(" ")}
+
 Total Paid: ₹${booking.totalAmount}
+Please keep this email for your records, and feel free to contact us if you have any questions or need further assistance.
+Please follow the instructions of Terms and Conditions for a smooth experience.
 
 Thank you for booking with us!
 
 Regards,
-TASK Booking Team`
+TASK TUMKUR (R) ADVENTURE GEAR  Booking Team`
     };
 
     transporter.sendMail(mailOptions, (error, info) => {

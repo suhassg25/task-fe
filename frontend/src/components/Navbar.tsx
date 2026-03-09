@@ -35,7 +35,14 @@ const Navbar = () => {
       <div className="container mx-auto flex items-center justify-between py-4 px-4">
         <Link to="/" className="flex items-center gap-2">
           <img src={logo} alt="logo" className="h-10 w-10 text-primary" style={{ borderRadius: 50, }} />
-          <span className={`font-display sm:text-lg md:text-2xl font-bold text-secondary-foreground`}>{t("title")}</span>
+          <div>
+            <span className={`font-display sm:text-lg md:text-lg font-bold text-secondary-foreground`}>{t("title")}</span> <br />
+            <span   className="font-display sm:text-lg md:text-lg font-bold 
+  bg-gradient-to-r from-lime-200 via-green-300 to-emerald-300 
+  bg-clip-text text-transparent"
+>
+{t("subtitle")}</span>
+          </div>
         </Link>
 
         <div className="hidden md:flex items-center gap-8">
@@ -65,7 +72,7 @@ const Navbar = () => {
           </Button>
         </div>
 
-        <button className="md:hidden text-secondary-foreground" onClick={() => setOpen(!open)}>
+        <button className="md:hidden text-secondary-foreground  bg-gradient-to-r from-lime-500 via-green-500 to-emerald-400 p-1" style={{borderRadius : 8}} onClick={() => setOpen(!open)}>
           {open ? <X size={28} /> : <Menu size={28} />}
         </button>
       </div>

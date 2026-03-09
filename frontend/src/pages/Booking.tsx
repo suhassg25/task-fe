@@ -76,22 +76,22 @@ const Booking = () => {
         diff = Math.floor((new Date(formData.checkout).getTime() - new Date(formData.checkin).getTime()) / (1000 * 3600 * 24));
       }
 
-        const payload = {
-      ...formData,
-      guests: Number(formData.guests),
-      age: Number(formData.age),
-      noOfDays: diff,
-      totalAmount:
-        diff *
-        destinationsValues[formData.destination] *
-        Number(formData.guests),
-      guestDetails: formData.guestDetails.map((g) => ({
-        name: g.name,
-        age: Number(g.age),
-        bloodGroup: g.bloodGroup,
-        diabetes: g.diabetes,
-      })),
-    };
+      const payload = {
+        ...formData,
+        guests: Number(formData.guests),
+        age: Number(formData.age),
+        noOfDays: diff,
+        totalAmount:
+          diff *
+          destinationsValues[formData.destination] *
+          Number(formData.guests),
+        guestDetails: formData.guestDetails.map((g) => ({
+          name: g.name,
+          age: Number(g.age),
+          bloodGroup: g.bloodGroup,
+          diabetes: g.diabetes,
+        })),
+      };
 
       const url = `https://task-fe-75yw.onrender.com/api/create-order`;
       const url1 = `http://localhost:5000/api/create-order`;
@@ -136,7 +136,7 @@ const Booking = () => {
         <div className="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-md bg-black/40">
           <div className="flex flex-col items-center gap-4 text-white">
             {/* <Loader2 className="h-12 w-12 animate-spin" /> */}
-            <img src={logo} alt="logo" style={{height : 350, width : 350, borderRadius : "50%"}} />
+            <img src={logo} alt="logo" style={{ height: 350, width: 350, borderRadius: "50%" }} />
             <p className="text-lg font-semibold">
               Processing your booking...
             </p>
@@ -144,7 +144,7 @@ const Booking = () => {
         </div>
       )}
       <Navbar />
-      <div className="pt-20 pb-24">
+      <div className="pt-24 pb-24">
         <div className="container mx-auto px-4 max-w-2xl">
           <Link to="/" className="inline-flex items-center gap-2 text-muted-foreground hover:text-primary mb-4 font-body">
             <ArrowLeft className="h-4 w-4" /> {t("BacktoHome")}
@@ -217,20 +217,6 @@ const Booking = () => {
               </div>
               <div className="grid md:grid-cols-2 gap-4">
                 <div>
-                  <label className="text-sm font-semibold text-foreground font-body mb-1 block">{t("Age")}</label>
-                  <Input
-                    required
-                    type="tel"
-                    placeholder="Your age"
-                    className="bg-background"
-                    value={formData.age}
-                    onChange={(e) => {
-                      setFormData({ ...formData, age: e.target.value });
-                      validation(e.target, e.target.value)
-                    }}
-                  />
-                </div>
-                <div>
                   <label className="text-sm font-semibold text-foreground font-body mb-1 block flex items-center gap-2">
                     <MapPin className="h-4 w-4 text-primary" /> {t("Destination")}
                   </label>
@@ -245,18 +231,6 @@ const Booking = () => {
                     </SelectContent>
                   </Select>
                 </div>
-              </div>
-              <div>
-                <label className="text-sm font-semibold text-foreground font-body mb-1 block">{t("Health")}</label>
-                <Textarea
-                  required
-                  placeholder="Describe your health information like Past medical conditions, current medications, allergies, physical limitations, etc. If none, write 'None'."
-                  className="bg-background"
-                  value={formData.hiText}
-                  onChange={(e) => setFormData({ ...formData, hiText: e.target.value })}
-                />
-              </div>
-              <div className="grid md:grid-cols-2 gap-4">
                 <div>
                   <label className="text-sm font-semibold text-foreground font-body mb-1 block flex items-center gap-2">
                     <Calendar className="h-4 w-4 text-primary" /> {t("checkin")}
@@ -269,22 +243,17 @@ const Booking = () => {
                     onChange={(e) => setFormData({ ...formData, checkin: e.target.value })}
                   />
                 </div>
-                <div>
-                  <label className="text-sm font-semibold text-foreground font-body mb-1 block flex items-center gap-2">
-                    <Calendar className="h-4 w-4 text-primary" /> {t("checkout")}
-                  </label>
-                  <Input
-                    required
-                    type="date"
-                    className="bg-background"
-                    value={formData.checkout}
-                    onChange={(e) => {
-                      setFormData({ ...formData, checkout: e.target.value });
-                    }}
-                  />
-                </div>
               </div>
-
+              <div>
+                <label className="text-sm font-semibold text-foreground font-body mb-1 block">{t("Health")}</label>
+                <Textarea
+                  required
+                  placeholder="Describe your health information like Past medical conditions, current medications, allergies, physical limitations, etc. If none, write 'None'."
+                  className="bg-background"
+                  value={formData.hiText}
+                  onChange={(e) => setFormData({ ...formData, hiText: e.target.value })}
+                />
+              </div>
               <div>
                 <label className="text-sm font-semibold text-foreground font-body mb-1 block flex items-center gap-2">
                   <Users className="h-4 w-4 text-primary" /> {t("numberofGuests")}
@@ -298,7 +267,7 @@ const Booking = () => {
                       guests: v,
                       guestDetails: Array.from({ length: count }, (_, i) =>
                         prev.guestDetails[i] || {
-                          name: "",
+                          name: i === 0 ? prev.name : "",
                           age: "",
                           bloodGroup: "",
                           diabetes: false,
@@ -318,7 +287,7 @@ const Booking = () => {
                     ))}
                   </SelectContent>
                 </Select>
-                <br/>
+                <br />
                 {formData.guestDetails.length > 0 && (
                   <div className="space-y-6">
                     {formData.guestDetails.map((guest, index) => (
@@ -327,7 +296,7 @@ const Booking = () => {
                         className="border border-border rounded-xl p-5 bg-background space-y-4"
                       >
                         <h3 className="font-semibold text-lg">
-                          Guest {index + 1} Details
+                          Person {index + 1} Details
                         </h3>
 
                         <div className="grid md:grid-cols-2 gap-4">

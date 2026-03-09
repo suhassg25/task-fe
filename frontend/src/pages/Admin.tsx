@@ -31,13 +31,30 @@ const statusColor: Record<string, string> = {
 
 async function patchBooking(id: string, status: string) {
   const url = `https://task-fe-75yw.onrender.com/api/admin/booking/${id}?key=suhas_is_admin`;
-  // const url = http://localhost:5000/api/admin/booking/${id}?key=suhas_is_admin
+  // const url = `http://localhost:5000/api/admin/booking/${id}?key=suhas_is_admin`;
   await fetch(url, {
     method: "PATCH",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ status }),
   });
+  if(status === "confirmed"){
+    await sendEmail(id);
+  }
 }
+
+async function sendEmail(booking: string) {
+   try{
+          const emailResp = await fetch("https://task-fe-75yw.onrender.com/api/verify-payment", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ bookingId: booking }),
+          })
+        }catch (err){
+          console.error("Error sending email:", err);
+        }
+
+}
+
 
 const Admin = () => {
   const [status, setStatus] = useState<keyof typeof statusColor>("pending");
