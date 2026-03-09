@@ -134,7 +134,7 @@ const Admin = () => {
                   <TableHead className="font-body">Name</TableHead>
                   <TableHead className="font-body">Destination</TableHead>
                   <TableHead className="font-body">Check-in</TableHead>
-                  <TableHead className="font-body">Check-out</TableHead>
+                  {/* <TableHead className="font-body">Check-out</TableHead> */}
                   <TableHead className="font-body">Guests Info</TableHead>
                   <TableHead className="font-body">Amount</TableHead>
                   <TableHead className="font-body">Alternative Mobile</TableHead>
@@ -157,7 +157,7 @@ const Admin = () => {
                       {/* <TableCell className="font-body">{b.destination}</TableCell> */}
                       <TableCell className="font-body">{b.destination}</TableCell>
                       <TableCell className="font-body">{b.checkin[0].split("T")[0]}</TableCell>
-                      <TableCell className="font-body">{b.checkout[0].split("T")[0]}</TableCell>
+                      {/* <TableCell className="font-body">{b.checkout[0].split("T")[0]}</TableCell> */}
                       <TableCell className="font-body">{b.guests} {"  "}
                         <button
                           onClick={() =>
