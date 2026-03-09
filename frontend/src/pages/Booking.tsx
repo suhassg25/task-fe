@@ -70,11 +70,11 @@ const Booking = () => {
     try {
       setIsLoading(true);
       let diff = 1;
-      if (new Date(formData.checkout).getTime() === new Date(formData.checkin).getTime()) {
-        diff = 1;
-      } else {
-        diff = Math.floor((new Date(formData.checkout).getTime() - new Date(formData.checkin).getTime()) / (1000 * 3600 * 24));
-      }
+      // if (new Date(formData.checkout).getTime() === new Date(formData.checkin).getTime()) {
+      //   diff = 1;
+      // } else {
+      //   diff = Math.floor((new Date(formData.checkout).getTime() - new Date(formData.checkin).getTime()) / (1000 * 3600 * 24));
+      // }
 
       const payload = {
         ...formData,
