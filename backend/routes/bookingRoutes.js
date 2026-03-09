@@ -150,7 +150,7 @@ router.post('/create-order', async (req, res) => {
   }
 });
 
-// Verify payment signature and confirm booking
+// Verify payment signature and confirm booking to ${new Date(booking.checkout).toISOString().slice(0, 10)}
 router.post('/verify-payment', async (req, res) => {
   try {
     const { bookingId } = req.body;
@@ -168,7 +168,7 @@ Your booking for service has been confirmed.
 
 Booking ID: ${booking._id}
 Service: ${booking.destination}
-Dates: ${new Date(booking.checkin).toISOString().slice(0, 10)} to ${new Date(booking.checkout).toISOString().slice(0, 10)}
+Dates: ${new Date(booking.checkin).toISOString().slice(0, 10)}
 Guests: ${booking.guests}
 
 Details of Peoples : ${booking.guestDetails.map(g => `\n* ${g.name}, Age: ${g.age}, Blood Group: ${g.bloodGroup}, Diabetes: ${g.diabetes ? "Yes" : "No"}`).join(" ")}
