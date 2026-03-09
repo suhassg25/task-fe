@@ -1,6 +1,6 @@
 import { number } from "framer-motion";
 import { get } from "http";
-import { Fullscreen, KanbanSquare } from "lucide-react";
+import { Fullscreen, KanbanSquare, Ribbon } from "lucide-react";
 import { b } from "vitest/dist/chunks/suite.d.FvehnV49.js";
 import { AlertTitle } from "./components/ui/alert";
 
@@ -12,7 +12,8 @@ export const translations = {
     contact: "Contact",
     admin: "Admin",
     bookNow: "Book Now",
-    title: "TASK TUMAKURU (R),",
+    title: "TASK TUMAKURU ",
+    ri: "(R), ",
     subtitle: "A Adventure Gear",
     whyus: "Why Choose Us",
     unforgettable: "Creating unforgettable outdoor experiences",
@@ -65,7 +66,8 @@ export const translations = {
     contact: "ಸಂಪರ್ಕ",
     admin: "ನಿರ್ವಾಹಕ",
     bookNow: "ಬುಕ್ ಮಾಡಿ",
-    title: "ಟಾಸ್ಕ್ ತುಮಕೂರು (ರಿ), ",
+    title: "ಟಾಸ್ಕ್ ತುಮಕೂರು ",
+    ri: "(ರಿ), ",
     subtitle: "ಅಡ್ವೆಂಚರ್ ಗಿಯರ್",
     whyus: "ನಮ್ಮನ್ನು ಏಕೆ ಆರಿಸಬೇಕು",
     unforgettable: "ಅಮರ ಅನುಭವಗಳನ್ನು ಸೃಷ್ಟಿಸುವುದು",

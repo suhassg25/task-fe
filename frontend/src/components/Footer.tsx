@@ -11,7 +11,7 @@ const Footer = () => {
         <div className="grid md:grid-cols-4 gap-10">
           <div className="md:col-span-2">
             <div className="flex items-center gap-2 mb-4">
-              <img src={logo} alt="logo" className="h-10 w-10 text-primary rounded-full" />
+              <img src={logo} alt="logo" className="h-12 w-12 text-primary" style={{ borderRadius: 8, }} />
               <span className="font-display text-xl font-bold text-secondary-foreground">TASK</span>
             </div>
             <p className="text-secondary-foreground/60 font-body max-w-sm">

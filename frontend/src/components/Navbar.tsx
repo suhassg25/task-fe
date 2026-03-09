@@ -34,12 +34,16 @@ const Navbar = () => {
         ${location.pathname.includes("booking") || location.pathname.includes("admin") || location.pathname.includes("terms&conditions") ? "bg-secondary/95 backdrop-blur-md border-b border-secondary" : scrolled ? "bg-secondary/95 backdrop-blur-md border-b border-secondary" : "bg-transparent"}`}>
       <div className="container mx-auto flex items-center justify-between py-4 px-4">
         <Link to="/" className="flex items-center gap-2">
-          <img src={logo} alt="logo" className="h-10 w-10 text-primary" style={{ borderRadius: 50, }} />
-          <div>
-            <span className={`font-display sm:text-lg md:text-lg font-bold text-secondary-foreground`}>{t("title")}</span> <br />
-            <span   className="font-display sm:text-lg md:text-lg font-bold 
+          <img src={logo} alt="logo" className="h-12 w-12 text-primary" style={{ borderRadius: 8, }} />
+          <div className="flex flex-col -mt-1">
+            <div>
+            <span className={`font-display sm:text-lg md:text-lg font-bold text-secondary-foreground`} style={{paddingBottom : 0}}>{t("title")}</span>  
+            <span className="font-display sm:text-lg md:text-lg font-bold" style={{color: "orange",}}>{t("ri")}</span> <br />
+            </div>
+            <span   className="font-display font-bold 
   bg-gradient-to-r from-lime-200 via-green-300 to-emerald-300 
-  bg-clip-text text-transparent"
+  bg-clip-text text-transparent pl-[66px] md:pl-[84px]"
+  style={{fontSize : 12, paddingTop : 0, marginTop : -7}}
 >
 {t("subtitle")}</span>
           </div>
