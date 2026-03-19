@@ -1,5 +1,8 @@
 import { motion } from "framer-motion";
 import { useLanguage } from "../LanguageContext";
+import Navbar from "./Navbar";
+import {ArrowLeft,} from "lucide-react";
+import { Link } from "react-router-dom";
 import person2 from "@/assets/person1.jpg";
 import person3 from "@/assets/person2.jpg";
 import person1 from "@/assets/person3.jpg";
@@ -60,6 +63,19 @@ const AboutSection = () => {
   const { t } = useLanguage();
 
   return (
+    <div className="min-h-screen bg-background">
+          <Navbar />
+    
+          <div className="pt-24">
+            <div className="container mx-auto px-4">
+              <Link
+                to="/"
+                className="inline-flex items-center gap-2 text-muted-foreground hover:text-primary mb-4 font-body"
+              >
+                <ArrowLeft className="h-4 w-4" /> {t("BacktoHome")}
+              </Link>
+            </div>
+          </div>
     <section id="about" className="py-24 bg-background">
       <div className="container mx-auto px-4">
 
@@ -105,6 +121,7 @@ const AboutSection = () => {
 
       </div>
     </section>
+    </div>
   );
 };
 

@@ -43,7 +43,6 @@ const razorpay = new Razorpay({
 */
 
 // Nodemailer setup
-console.log("Email user:", process.env.EMAIL_USER, "Email pass:", process.env.EMAIL_PASS);
 const transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
@@ -159,7 +158,7 @@ router.post('/verify-payment', async (req, res) => {
     if (!booking) return res.status(404).json({ error: 'Booking not found' });
 
       const mailOptions = {
-      from: process.env.EMAIL_USER,
+      from: "sgsuhas75@gmail.com",
       to: booking.email,
       subject: `Booking Confirmation - ${booking._id}`,
       text: `Hi ${booking.name},

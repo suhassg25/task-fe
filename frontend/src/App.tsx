@@ -13,6 +13,7 @@ import { LanguageProvider } from "./LanguageContext";
 import Payment from "./pages/Payment";
 import GettingTouch from "./pages/GettingTouch";
 import FloatingButtons from "./components/FloatingButtonsWrapper";
+import AboutSection from "./components/AboutSection";
 
 const queryClient = new QueryClient();
 
@@ -31,6 +32,7 @@ const App = () => (
           <Route path="/terms&conditions" element={<TermsAndConditions />} />
           <Route path="/scanPayment" element={<Payment />} />
           <Route path="/gettingTouch" element={<GettingTouch />} />
+          <Route path="/about" element={<AboutSection />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
         <FloatingButtons />

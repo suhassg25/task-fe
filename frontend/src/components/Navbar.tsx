@@ -22,7 +22,6 @@ const Navbar = () => {
   const navLinks = [
     { label: t("home"), path: "/" },
     { label: t("destinations"), path: "/#destinations" },
-    { label: t("about"), path: "/#about" },
     { label: t("contact"), path: "/#contact" },
   ];
 
@@ -40,10 +39,10 @@ const Navbar = () => {
             <span className={`font-display sm:text-lg md:text-lg font-bold text-secondary-foreground`} style={{paddingBottom : 0}}>{t("title")}</span>  
             <span className="font-display sm:text-lg md:text-lg font-bold" style={{color: "orange",}}>{t("ri")}</span> <br />
             </div>
-            <span   className="font-display font-bold 
+            <span   className={`font-display font-bold 
   bg-gradient-to-r from-lime-200 via-green-300 to-emerald-300 
-  bg-clip-text text-transparent pl-[66px] md:pl-[84px]"
-  style={{fontSize : 12, paddingTop : 0, marginTop : -7}}
+  bg-clip-text text-transparent ${lang === "en" ? "pl-[63px]" : "pl-[58px]"} md:pl-[83px]`}
+  style={{fontSize : 12, paddingTop : 0, marginTop : -3}}
 >
 {t("subtitle")}</span>
           </div>
@@ -60,6 +59,10 @@ const Navbar = () => {
             </a>
 
           ))}
+          <Link to="/about" className="text-secondary-foreground/80 hover:text-primary transition-colors font-medium text-sm tracking-wide uppercase"
+            >
+            {t("about")}
+          </Link>
           <Link to="/admin" className="text-secondary-foreground/80 hover:text-primary transition-colors font-medium text-sm tracking-wide uppercase">
             {t("admin")}
           </Link>
@@ -93,6 +96,9 @@ const Navbar = () => {
               {link.label}
             </a>
           ))}
+          <Link to="/about" className="block py-3 text-secondary-foreground/80 hover:text-primary font-medium">
+            {t("about")}
+          </Link>
           <Link to="/admin" className="block py-3 text-secondary-foreground/80 hover:text-primary font-medium">
             {t("admin")}
           </Link>
