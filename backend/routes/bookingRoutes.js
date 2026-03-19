@@ -7,6 +7,9 @@ import nodemailer from 'nodemailer';
 import multer from "multer";
 import path from "path";
 import fs from "fs";
+import dns from 'dns';
+
+dns.setDefaultResultOrder('ipv4first');
 
 const uploadPath = path.join(process.cwd(), "uploads");
 
@@ -47,7 +50,6 @@ const transporter = nodemailer.createTransport({
   host: "smtp.gmail.com",
   port: 587,
   secure: false,
-  family: 4,
   auth: {
     user: "sgsuhas75@gmail.com", 
     pass: "hfpr ukvf drxp ahnk", 
