@@ -2,80 +2,26 @@ import { motion } from "framer-motion";
 import { MapPin, Star, ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import destLake from "@/assets/Adv sports.jpg";
-import destMountain from "@/assets/trekking.jpeg";
-import destForest from "@/assets/scuba.jpeg";
-import destDesert from "@/assets/Env Studies.jpeg";
-import cycling from "@/assets/cycling.jpeg";
-import cultural from "@/assets/CultaralActivities.jpeg";
-import nature from "@/assets/NatureTours.jpeg";
-import watersports from "@/assets/waterSports.jpeg";
-import cineama from "@/assets/Cinema.jpeg";
+import documentriess from "@/assets/documentriess.jpg";
+import publications from "@/assets/publications.jpg";
 import { useLanguage } from "@/LanguageContext";
 
 const destinations = [
   {
     title: "Adventure Sports",
-    location: "Tumkur",
-    price: "₹4,500",
     rating: 4.9,
     image: destLake,
   },
   {
-    title: "Trekking",
-    location: "Tumkur",
-    price: "₹6,000",
+    title: "Publications",
     rating: 4.8,
-    image: destMountain,
+    image: publications,
   },
   {
-    title: "Scuba Diving",
-    location: "Tumkur",
-    price: "₹3,800",
-    rating: 4.7,
-    image: destForest,
-  },
-  {
-    title: "Environmental Study",
-    location: "tumkur",
-    price: "₹5,200",
-    rating: 4.9,
-    image: destDesert,
-  },
-  {
-    title: "Cycling",
-    location: "Tumkur",
-    price: "₹3,800",
-    rating: 4.7,
-    image: cycling,
-  },
-  {
-    title: "Cultural Activities",
-    location: "Tumkur",
-    price: "₹6,000",
+    title: "Documentries",
     rating: 4.8,
-    image: cultural,
-  },
-  {
-    title: "Nature tours",
-    location: "Tumkur",
-    price: "₹9,000",
-    rating: 4.8,
-    image: nature,
-  },
-  {
-    title: "Water Sports",
-    location: "Tumkur",
-    price: "₹1,000",
-    rating: 4.8,
-    image: watersports,
-  },
-  {
-    title: "Cinema",
-    location: "Tumkur",
-    price: "₹2,000",
-    rating: 4.8,
-    image: cineama,
-  },
+    image: documentriess,
+  }, 
 ];
 
 const DestinationsSection = () => {
@@ -100,7 +46,7 @@ const DestinationsSection = () => {
           </p>
         </motion.div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {destinations.map((dest, i) => (
             <motion.div
               key={dest.title}
@@ -116,24 +62,14 @@ const DestinationsSection = () => {
                   alt={dest.title}
                   className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                 />
-                <div className="absolute top-3 right-3 bg-secondary/80 backdrop-blur-sm text-secondary-foreground px-3 py-1 rounded-full text-sm font-semibold">
-                  {dest.price}
-                </div>
               </div>
-              <div className="p-5">
+              <div className="p-5 flex items-center justify-between">
                 <h3 className="font-display text-xl font-semibold text-card-foreground">{dest.title}</h3>
-                <div className="flex items-center gap-1 mt-2 text-muted-foreground font-body text-sm">
-                  <MapPin className="h-4 w-4" />
-                  {dest.location}
-                </div>
-                <div className="flex items-center justify-between mt-4">
+                <div className="">
                   <div className="flex items-center gap-1">
                     <Star className="h-4 w-4 text-warm-gold" fill="currentColor" />
                     <span className="text-sm font-semibold text-card-foreground">{dest.rating}</span>
                   </div>
-                  <Link to="/booking" className="text-primary hover:text-olive-light font-semibold text-sm flex items-center gap-1">
-                    {t("bookNow")} <ArrowRight className="h-4 w-4" />
-                  </Link>
                 </div>
               </div>
             </motion.div>

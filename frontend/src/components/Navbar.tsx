@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -9,6 +9,36 @@ import { useLanguage } from "../LanguageContext";
 const Navbar = () => {
   const { t, toggleLang, lang } = useLanguage();
   const [scrolled, setScrolled] = useState(false);
+  const [showAdmin, setShowAdmin] = useState(false);
+  const [mobileAdmin, setMobileAdmin] = useState(false);
+  const lastTap = useRef(0);
+
+  const handleTap = () => {
+    const now = Date.now();
+    const delay = now - lastTap.current;
+
+    if (delay < 300 && delay > 0) {
+      setMobileAdmin(true);
+    }
+
+    lastTap.current = now;
+  };
+
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.ctrlKey && event.key.toLowerCase() === "b") {
+        event.preventDefault(); // prevent browser default (bookmark)
+        setShowAdmin((prev) => !prev); // toggle visibility
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, []);
+
 
   useEffect(() => {
     const handleScroll = () => {
@@ -37,11 +67,11 @@ const Navbar = () => {
           <div className="flex flex-col -mt-1">
             <div>
             <span className={`font-display sm:text-lg md:text-lg font-bold text-secondary-foreground`} style={{paddingBottom : 0}}>{t("title")}</span>  
-            <span className="font-display sm:text-lg md:text-lg font-bold" style={{color: "orange",}}>{t("ri")}</span> <br />
+            <span className="font-display sm:text-lg md:text-lg font-bold" style={{color: "orange",}}>®</span> <br />
             </div>
             <span   className={`font-display font-bold 
   bg-gradient-to-r from-lime-200 via-green-300 to-emerald-300 
-  bg-clip-text text-transparent ${lang === "en" ? "pl-[63px]" : "pl-[58px]"} md:pl-[83px]`}
+  bg-clip-text text-transparent ${lang === "en" ? "pl-[50px]" : "pl-[50px]"} md:pl-[70px]`}
   style={{fontSize : 12, paddingTop : 0, marginTop : -3}}
 >
 {t("subtitle")}</span>
@@ -63,23 +93,20 @@ const Navbar = () => {
             >
             {t("about")}
           </Link>
-          <Link to="/admin" className="text-secondary-foreground/80 hover:text-primary transition-colors font-medium text-sm tracking-wide uppercase">
-            {t("admin")}
-          </Link>
+          {showAdmin && (
+            <Link to="/admin" className="text-secondary-foreground/80 hover:text-primary transition-colors font-medium text-sm tracking-wide uppercase">
+              {t("admin")}
+            </Link>
+          )}
         </div>
 
         <div className="hidden md:flex items-center gap-3">
-          <Link to="/booking">
-            <Button className="bg-primary text-primary-foreground hover:bg-olive-light font-semibold px-6">
-              {t("bookNow")}
-            </Button>
-          </Link>
           <Button variant="outline" onClick={toggleLang}>
             {lang === "en" ? "ಕನ್ನಡ" : "English"}
           </Button>
         </div>
 
-        <button className="md:hidden text-secondary-foreground  bg-gradient-to-r from-lime-500 via-green-500 to-emerald-400 p-1" style={{borderRadius : 8}} onClick={() => setOpen(!open)}>
+        <button className="md:hidden text-secondary-foreground  bg-gradient-to-r from-lime-500 via-green-500 to-emerald-400 p-1" style={{borderRadius : 8}} onClick={() => {setOpen(!open); handleTap();}}>
           {open ? <X size={28} /> : <Menu size={28} />}
         </button>
       </div>
@@ -99,13 +126,12 @@ const Navbar = () => {
           <Link to="/about" className="block py-3 text-secondary-foreground/80 hover:text-primary font-medium">
             {t("about")}
           </Link>
-          <Link to="/admin" className="block py-3 text-secondary-foreground/80 hover:text-primary font-medium">
-            {t("admin")}
-          </Link>
-          <Link to="/booking" onClick={() => setOpen(false)}>
-            <Button className="w-full mt-2 bg-primary text-primary-foreground">{t("bookNow")}</Button>
-          </Link>
-          <Button variant="outline" className="w-full mt-2" onClick={toggleLang}>
+          {mobileAdmin && (
+            <Link to="/admin" className="block py-3 text-secondary-foreground/80 hover:text-primary font-medium">
+              {t("admin")}
+            </Link>
+          )}
+          <Button variant="outline" className="w-full mt-2" onClick={() => { toggleLang(); setOpen(false); setMobileAdmin(false); }}>
             {lang === "en" ? "ಕನ್ನಡ" : "English"}
           </Button>
         </div>

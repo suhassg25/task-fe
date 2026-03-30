@@ -1,5 +1,6 @@
 import React, { useRef } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
+import { Autoplay } from "swiper/modules";
 
 import 'swiper/css';
 import 'swiper/css/pagination';
@@ -15,17 +16,26 @@ export default function SwiperCarousal({ docs }) {
     const videos = document.querySelectorAll('.swiper-slide video');
 
     videos.forEach((video) => {
-      video.pause(); 
+      video.pause();
     });
   };
 
   return (
     <Swiper
+      modules={[Autoplay]}
+      spaceBetween={20}
+      slidesPerView={1}
+      loop={true}
+      autoplay={{
+        delay: 3000,
+        disableOnInteraction: false, // important
+      }}
       onSwiper={(swiper) => (swiperRef.current = swiper)}
+      onTouchStart={() => swiperRef.current?.autoplay.stop()}
+      onMouseEnter={() => swiperRef.current?.autoplay.stop()} // desktop
       onSlideChange={handleSlideChange}
-      pagination={{ type: 'fraction' }}
+      pagination={{ type: "fraction" }}
       navigation
-      modules={[Pagination, Navigation]}
       className="mySwiper"
     >
       {docs.map((doc, index) => (
